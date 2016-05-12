@@ -15,11 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A simple block that encourages users to complete their profile
- *
- * Checks if all required "profile fields" (admin > users > accouts > profile fields)
- * are filled for the current user; if not, suggests him/her to take a few minutes
- * to complete his/her profile
+ * A Moodle block that shows a map of users
  *
  * English and french versions included / versions anglaise et française incluses.
  *
@@ -34,3 +30,4 @@ $plugin->version = 2016051101;
 $plugin->requires = 2014111000; // Moodle v2.8.
 $plugin->maturity = MATURITY_BETA;
 $plugin->release = "0.1";
+$plugin->cron = 1; // 1 second [test]
