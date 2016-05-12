@@ -30,7 +30,7 @@
  */
 
 function usersmap_generate_content() {
-	echo get_string('example_text', 'block_usersmap');
+	return get_string('example_text', 'block_usersmap');
 }
 
 function usersmap_update_geoloc() {
