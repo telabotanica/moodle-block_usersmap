@@ -32,6 +32,13 @@ function usersmap_generate_content() {
 function usersmap_update_geolocation($updateeveryone=false) {
 	global $DB;
 
+	$baseurl = get_config('usersmap', 'Geolocation_Url_Scheme');
+	if (empty($baseurl)) {
+		echo "ERROR Geolocation_Url_Scheme is not set";
+		return false;
+	}
+
+	// Query all users having a city set in their profile
 	$q = "SELECT id, city, country FROM user WHERE city != ''";
 	if (! $updateeveryone) { // Only update users having no geolocation yet.
 		$q .= "AND id NOT IN (SELECT userid FROM block_usersmap)";
@@ -41,12 +48,11 @@ function usersmap_update_geolocation($updateeveryone=false) {
 
 	$res = $DB->get_records_sql($q, array());
 
-	$baseurl = "http://api.tela-botanica.org/service:eflore:0.1/osm/zone-admin/?masque=";
 	$values = array();
 	if ($res) {
 		foreach ($res as $r) {
 			//var_dump($r);
-			$url = $baseurl . $r->city;
+			$url = str_replace('{{city}}', $r->city, $baseurl);
 			//var_dump($url);
 			$info = file_get_contents($url);
 			$lat = null;

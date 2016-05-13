@@ -30,6 +30,10 @@ $string['usersmap:myaddinstance'] = 'Add a Users map block to the My Moodle page
 $string['pluginname'] = 'Users map block';
 $string['block_usersmap_title'] = 'Users map';
 $string['example_text'] = 'Howdy the great map :)';
+
+$string['geolocation_url_scheme_text'] = 'Geolocation service URL scheme';
+$string['geolocation_url_scheme_text_desc'] = 'Pseudo-field {{city}} will be replaced by user\'s city';
+
 $string['scheduled_task_title'] = 'Update users geographical coordinates';
 $string['scheduled_task_title_all'] = 'Update users geographical coordinates (ALL)';
 $string['scheduled_task_start_message'] = 'Updating users geographical coordinates';

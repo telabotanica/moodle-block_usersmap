@@ -30,6 +30,10 @@ $string['usersmap:myaddinstance'] = 'Ajouter un bloc Carte des utilisateurs à v
 $string['pluginname'] = 'Bloc Carte des utilisateurs';
 $string['block_usersmap_title'] = 'Carte des utilisateurs';
 $string['example_text'] = 'Salut la carte de dingo :)';
+
+$string['geolocation_url_scheme_text'] = 'Schéma d\'url du service de géolocalisation';
+$string['geolocation_url_scheme_text_desc'] = 'Le pseudo-champ {{city}} sera remplacé par la ville de l\'utilisateur';
+
 $string['scheduled_task_title'] = 'Mise à jour des coordonnées géographiques des utilisateurs';
 $string['scheduled_task_title_all'] = 'Mise à jour des coordonnées géographiques des utilisateurs (TOUS)';
 $string['scheduled_task_start_message'] = 'Mise à jour des coordonnées géographiques des utilisateurs !';

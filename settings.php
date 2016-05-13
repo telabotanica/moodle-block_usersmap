@@ -25,9 +25,18 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->component = 'block_usersmap';
-$plugin->version = 2016051305;
-$plugin->requires = 2014111000; // Moodle v2.8.
-$plugin->maturity = MATURITY_BETA;
-$plugin->release = "0.1";
-$plugin->cron = 1; // 1 second [test]
+defined('MOODLE_INTERNAL') || die;
+
+// Secttings header title according to language file.
+$settings->add(new admin_setting_heading(
+    'configheader',
+    get_string('blocksettings', 'block')
+));
+
+// Url scheme of geolocation webservice.
+$settings->add(new admin_setting_configtext(
+    'usersmap/Geolocation_Url_Scheme',
+    get_string('geolocation_url_scheme_text', 'block_usersmap'),
+    get_string('geolocation_url_scheme_text_desc', 'block_usersmap'),
+    ''
+));
