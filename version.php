@@ -26,7 +26,7 @@
  */
 
 $plugin->component = 'block_usersmap';
-$plugin->version = 2016051305;
+$plugin->version = 2016051306;
 $plugin->requires = 2014111000; // Moodle v2.8.
 $plugin->maturity = MATURITY_BETA;
 $plugin->release = "0.1";
