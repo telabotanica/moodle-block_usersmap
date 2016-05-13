@@ -31,4 +31,6 @@ $string['pluginname'] = 'Bloc Carte des utilisateurs';
 $string['block_usersmap_title'] = 'Carte des utilisateurs';
 $string['example_text'] = 'Salut la carte de dingo :)';
 $string['scheduled_task_title'] = 'Mise à jour des coordonnées géographiques des utilisateurs';
+$string['scheduled_task_title_all'] = 'Mise à jour des coordonnées géographiques des utilisateurs (TOUS)';
 $string['scheduled_task_start_message'] = 'Mise à jour des coordonnées géographiques des utilisateurs !';
+$string['scheduled_task_start_message_all'] = 'Mise à jour des coordonnées géographiques des utilisateurs (TOUS)';

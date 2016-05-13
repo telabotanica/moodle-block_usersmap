@@ -28,3 +28,48 @@
 function usersmap_generate_content() {
 	return get_string('example_text', 'block_usersmap');
 }
+
+function usersmap_update_geolocation($updateeveryone=false) {
+	global $DB;
+
+	$q = "SELECT id, city, country FROM user WHERE city != ''";
+	if (! $updateeveryone) { // Only update users having no geolocation yet.
+		$q .= "AND id NOT IN (SELECT userid FROM block_usersmap)";
+	}
+	$q .= " ORDER BY RAND()"; // For debug purposes.
+	$q .= " LIMIT 10";
+
+	$res = $DB->get_records_sql($q, array());
+
+	$baseurl = "http://api.tela-botanica.org/service:eflore:0.1/osm/zone-admin/?masque=";
+	$values = array();
+	if ($res) {
+		foreach ($res as $r) {
+			var_dump($r);
+			$url = $baseurl . $r->city;
+			var_dump($url);
+			$info = file_get_contents($url);
+			$lat = null;
+			$lon = null;
+			if ($info) {
+				$info = json_decode($info);
+				var_dump($info);
+				$lat = $info->centre_lat;
+				$lon = $info->centre_lng;
+			}
+			$values[] = "(" . $r->id . ", $lat, $lon)";
+		}
+		$valuesstring = implode(',', $values);
+		// @TODO if update all, truncate table first or something
+		$qins = "INSERT INTO block_usersmap VALUES $valuesstring";
+		var_dump($qins);
+		$DB->execute($qins);
+	}
+
+	// 
+	// foreach() {
+	//		geoloc
+	//		add to values
+	// }
+	// INSERT
+}

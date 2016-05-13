@@ -25,8 +25,14 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+include_once($CFG->dirroot.'/blocks/usersmap/lib.php');
+
 namespace block_usersmap\task;
 
+/**
+ * Updates geolocation for users having none yet, and stores the coordinates
+ * into block_usersmap table (to be executed regularly, for ex. daily)
+ */
 class usersmap_update_geoloc extends \core\task\scheduled_task {
 
     public function get_name() {
@@ -36,5 +42,23 @@ class usersmap_update_geoloc extends \core\task\scheduled_task {
 
     public function execute() {
 		echo get_string('scheduled_task_start_message', 'block_usersmap') . PHP_EOL;
+		usersmap_update_geolocation(false); // Update only for users having no geolocation yet.
+    }
+}
+
+/**
+ * Updates geolocation for ALL users, and stores the coordinates into
+ * block_usersmap table (to be executed less frequently, for ex. monthly)
+ */
+class usersmap_update_geoloc_all extends \core\task\scheduled_task {
+
+    public function get_name() {
+        // Shown in admin screens
+        return get_string('scheduled_task_title_all', 'block_usersmap');
+    }
+
+    public function execute() {
+		echo get_string('scheduled_task_start_message_all', 'block_usersmap') . PHP_EOL;
+		usersmap_update_geolocation(true); // Update for all users
     }
 }
