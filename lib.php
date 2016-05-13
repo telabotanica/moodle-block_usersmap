@@ -45,15 +45,15 @@ function usersmap_update_geolocation($updateeveryone=false) {
 	$values = array();
 	if ($res) {
 		foreach ($res as $r) {
-			var_dump($r);
+			//var_dump($r);
 			$url = $baseurl . $r->city;
-			var_dump($url);
+			//var_dump($url);
 			$info = file_get_contents($url);
 			$lat = null;
 			$lon = null;
 			if ($info) {
 				$info = json_decode($info);
-				var_dump($info);
+				//var_dump($info);
 				$lat = $info->centre_lat;
 				$lon = $info->centre_lng;
 			}
@@ -61,8 +61,8 @@ function usersmap_update_geolocation($updateeveryone=false) {
 		}
 		$valuesstring = implode(',', $values);
 		// @TODO if update all, truncate table first or something
-		$qins = "INSERT INTO block_usersmap VALUES $valuesstring";
-		var_dump($qins);
+		$qins = "INSERT INTO block_usersmap(userid, lat, lon) VALUES $valuesstring";
+		//var_dump($qins);
 		$DB->execute($qins);
 	}
 

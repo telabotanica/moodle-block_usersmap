@@ -25,9 +25,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-include_once($CFG->dirroot.'/blocks/usersmap/lib.php');
-
 namespace block_usersmap\task;
+
+include_once($CFG->dirroot.'/blocks/usersmap/lib.php');
 
 /**
  * Updates geolocation for users having none yet, and stores the coordinates
