@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/usersmap" VERSION="2016051302" COMMENT="XMLDB file for Moodle block/usersmap">
+<XMLDB PATH="blocks/usersmap/db" VERSION="20160513" COMMENT="XMLDB file for Moodle blocks/usersmap"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
   <TABLES>
-    <TABLE NAME="block_usersmap" COMMENT="Users geolocation data">
+    <TABLE NAME="block_usersmap" COMMENT="Table storing coordinates (latitude/longitude) of users addresses.">
       <FIELDS>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" NEXT="lat"/>
-      	<FIELD NAME="lat" TYPE="float" LENGTH="15" NOTNULL="false" UNSIGNED="false" DEFAULT="NULL" SEQUENCE="false" ENUM="false" DECIMALS="12" PREVIOUS="userid" NEXT="lng"/>
-      	<FIELD NAME="lng" TYPE="float" LENGTH="15" NOTNULL="false" UNSIGNED="false" DEFAULT="NULL" SEQUENCE="false" ENUM="false" DECIMALS="12" PREVIOUS="lat"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="ID of Moodle user in table &quot;users&quot;"/>
+        <FIELD NAME="lat" TYPE="number" LENGTH="15" NOTNULL="false" SEQUENCE="false" DECIMALS="12" COMMENT="WGS84 latitude"/>
+        <FIELD NAME="lon" TYPE="number" LENGTH="15" NOTNULL="false" SEQUENCE="false" DECIMALS="12" COMMENT="WGS84 longitude"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="userid" NEXT="userid"/>
-        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary"/>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="userid" TYPE="foreign-unique" FIELDS="userid" REFTABLE="users" REFFIELDS="id" COMMENT="Foreign key on userid that references users.id"/>
       </KEYS>
     </TABLE>
   </TABLES>
