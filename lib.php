@@ -34,23 +34,28 @@ function usersmap_generate_content() {
 	global $COURSE;
 
 	$content = '';
-	// $content = get_string('example_text', 'block_usersmap');
 
 	// Count all active users in Moodle.
-	$r1 = "SELECT count(*) as nb FROM " . $CFG->prefix . "user WHERE confirmed = 1 AND deleted = 0 AND suspended = 0";
-	$res = $DB->get_records_sql($r1, array());
-	$nbusers = $res[0]['nb'];
-	$content .= "Il y a $nbusers inscrits à Moodle !<br/>";
+	if (! empty($this->config->displaynbmoodleusers) && ($this->config->displaynbmoodleusers == 1)) {
+		$r1 = "SELECT count(*) as nb FROM " . $CFG->prefix . "user WHERE confirmed = 1 AND deleted = 0 AND suspended = 0";
+		$res = $DB->get_records_sql($r1, array());
+		$singleresult = array_shift($res);
+		$nbusers = $singleresult->nb;
+		$content .= $nbusers . get_string('nb_moodle_users', 'block_usersmap');
+	}
 
 	// Count all users enrolled in the current course.
-	if ($COURSE->id != 1) { // Course n°1 is platform home.
-		$r2 = "SELECT count(DISTINCT userid) as nb"
-			. "FROM " . $CFG->prefix . "user_enrolments ue "
-			. "LEFT JOIN " . $CFG->prefix . "enrol e ON e.id = ue.enrolid "
-			. "WHERE e.courseid = " . $COURSE->id;
-		$res = $DB->get_records_sql($r2, array());
-		$nbenrolledusers = $res[0]['nb'];
-		$content .= "Il y a $nbenrolledusers inscrits à ce cours !<br/>";
+	if (! empty($this->config->displaynbenrolledusers) && ($this->config->displaynbenrolledusers == 1)) {
+		if ($COURSE->id != 1) { // Course n°1 is platform home.
+			$r2 = "SELECT count(DISTINCT userid) as nb "
+				. "FROM " . $CFG->prefix . "user_enrolments ue "
+				. "LEFT JOIN " . $CFG->prefix . "enrol e ON e.id = ue.enrolid "
+				. "WHERE e.courseid = " . $COURSE->id;
+			$res = $DB->get_records_sql($r2, array());
+			$singleresult = array_shift($res);
+			$nbenrolledusers = $singleresult->nb;
+			$content .= $nbenrolledusers . get_string('nb_enrolled_users', 'block_usersmap');
+		}
 	}
 
 	return $content;

@@ -31,6 +31,12 @@ $string['pluginname'] = 'Bloc Carte des utilisateurs';
 $string['block_usersmap_title'] = 'Carte des utilisateurs';
 $string['example_text'] = 'Salut la carte de dingo :)';
 
+$string['nb_moodle_users'] = 'utilisateurs sur Moodle';
+$string['nb_enrolled_users'] = 'utilisateurs dans ce cours';
+
+$string['config_display_nb_moodle_users'] = 'Afficher le nombre d\'utilisateurs de Moodle sous la carte';
+$string['config_display_nb_enrolled_users'] = 'Afficher le nombre d\'utilisateurs inscrits au cours actuel sous la carte';
+
 $string['geolocation_url_scheme_text'] = 'Schéma d\'url du service de géolocalisation';
 $string['geolocation_url_scheme_text_desc'] = 'Le pseudo-champ {{city}} sera remplacé par la ville de l\'utilisateur';
 

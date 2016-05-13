@@ -31,6 +31,12 @@ $string['pluginname'] = 'Users map block';
 $string['block_usersmap_title'] = 'Users map';
 $string['example_text'] = 'Howdy the great map :)';
 
+$string['nb_moodle_users'] = 'users in Moodle';
+$string['nb_enrolled_users'] = 'users in this course';
+
+$string['config_display_nb_moodle_users'] = 'Display number of Moodle users below the map';
+$string['config_display_nb_enrolled_users'] = 'Display number of users enrolled in the current course below the map';
+
 $string['geolocation_url_scheme_text'] = 'Geolocation service URL scheme';
 $string['geolocation_url_scheme_text_desc'] = 'Pseudo-field {{city}} will be replaced by user\'s city';
 
