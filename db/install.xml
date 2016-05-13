@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/usersmap" VERSION="2016051302" COMMENT="XMLDB file for Moodle block/usersmap">
+  <TABLES>
+    <TABLE NAME="block_usersmap" COMMENT="Users geolocation data">
+      <FIELDS>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" NEXT="lat"/>
+      	<FIELD NAME="lat" TYPE="float" LENGTH="15" NOTNULL="false" UNSIGNED="false" DEFAULT="NULL" SEQUENCE="false" ENUM="false" DECIMALS="12" PREVIOUS="userid" NEXT="lng"/>
+      	<FIELD NAME="lng" TYPE="float" LENGTH="15" NOTNULL="false" UNSIGNED="false" DEFAULT="NULL" SEQUENCE="false" ENUM="false" DECIMALS="12" PREVIOUS="lat"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="userid" NEXT="userid"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" PREVIOUS="primary"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
