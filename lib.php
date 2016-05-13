@@ -25,12 +25,44 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Generates the block contents : map and / or text
+ */
 function usersmap_generate_content() {
-	return get_string('example_text', 'block_usersmap');
+	global $DB;
+	global $CFG;
+	global $COURSE;
+
+	$content = '';
+	// $content = get_string('example_text', 'block_usersmap');
+
+	// Count all active users in Moodle.
+	$r1 = "SELECT count(*) as nb FROM " . $CFG->prefix . "user WHERE confirmed = 1 AND deleted = 0 AND suspended = 0";
+	$res = $DB->get_records_sql($r1, array());
+	$nbusers = $res[0]['nb'];
+	$content .= "Il y a $nbusers inscrits à Moodle !<br/>";
+
+	// Count all users enrolled in the current course.
+	if ($COURSE->id != 1) { // Course n°1 is platform home.
+		$r2 = "SELECT count(DISTINCT userid) as nb"
+			. "FROM " . $CFG->prefix . "user_enrolments ue "
+			. "LEFT JOIN " . $CFG->prefix . "enrol e ON e.id = ue.enrolid "
+			. "WHERE e.courseid = " . $COURSE->id;
+		$res = $DB->get_records_sql($r2, array());
+		$nbenrolledusers = $res[0]['nb'];
+		$content .= "Il y a $nbenrolledusers inscrits à ce cours !<br/>";
+	}
+
+	return $content;
 }
 
+/**
+ * Called by the cron (scheduled task) to retrieve geolocation data based on
+ * users cities
+ */
 function usersmap_update_geolocation($updateeveryone=false) {
 	global $DB;
+	global $CFG;
 
 	$baseurl = get_config('usersmap', 'Geolocation_Url_Scheme');
 	if (empty($baseurl)) {
@@ -39,9 +71,9 @@ function usersmap_update_geolocation($updateeveryone=false) {
 	}
 
 	// Query all users having a city set in their profile
-	$q = "SELECT id, city, country FROM user WHERE city != ''";
+	$q = "SELECT id, city, country FROM " . $CFG->prefix . "user WHERE city != ''";
 	if (! $updateeveryone) { // Only update users having no geolocation yet.
-		$q .= "AND id NOT IN (SELECT userid FROM block_usersmap)";
+		$q .= "AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
 	}
 	$q .= " ORDER BY RAND()"; // For debug purposes.
 	$q .= " LIMIT 10";
@@ -67,15 +99,8 @@ function usersmap_update_geolocation($updateeveryone=false) {
 		}
 		$valuesstring = implode(',', $values);
 		// @TODO if update all, truncate table first or something
-		$qins = "INSERT INTO block_usersmap(userid, lat, lon) VALUES $valuesstring";
+		$qins = "INSERT INTO " . $CFG->prefix . "block_usersmap(userid, lat, lon) VALUES $valuesstring";
 		//var_dump($qins);
 		$DB->execute($qins);
 	}
-
-	// 
-	// foreach() {
-	//		geoloc
-	//		add to values
-	// }
-	// INSERT
 }

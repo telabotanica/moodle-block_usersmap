@@ -40,3 +40,6 @@ $settings->add(new admin_setting_configtext(
     get_string('geolocation_url_scheme_text_desc', 'block_usersmap'),
     ''
 ));
+
+// @TODO parameterize geolocation type / fields mapping (where to find "lat"
+// and "lon" in service results)
