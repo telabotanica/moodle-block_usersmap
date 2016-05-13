@@ -55,8 +55,8 @@ function usersmap_update_geolocation($updateeveryone=false) {
 			$url = str_replace('{{city}}', $r->city, $baseurl);
 			//var_dump($url);
 			$info = file_get_contents($url);
-			$lat = null;
-			$lon = null;
+			$lat = 'NULL';
+			$lon = 'NULL';
 			if ($info) {
 				$info = json_decode($info);
 				//var_dump($info);
