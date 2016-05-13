@@ -25,9 +25,14 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->component = 'block_usersmap';
-$plugin->version = 2016051301;
-$plugin->requires = 2014111000; // Moodle v2.8.
-$plugin->maturity = MATURITY_BETA;
-$plugin->release = "0.1";
-$plugin->cron = 1; // 1 second [test]
+$tasks = array(
+    array(
+        'classname' => 'block_usersmap\task\usersmap_update_geoloc',
+        'blocking' => 0,
+        'minute' => '*',
+        'hour' => '*',
+        'day' => '*',
+        'dayofweek' => '*',
+        'month' => '*'
+    )
+);

@@ -56,9 +56,4 @@ class block_usersmap extends block_base {
 
         return $this->content;
     }
-
-	public function cron() {
-		usersmap_update_geoloc();
-		return true;
-	}
 }

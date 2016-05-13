@@ -25,9 +25,16 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->component = 'block_usersmap';
-$plugin->version = 2016051301;
-$plugin->requires = 2014111000; // Moodle v2.8.
-$plugin->maturity = MATURITY_BETA;
-$plugin->release = "0.1";
-$plugin->cron = 1; // 1 second [test]
+namespace block_usersmap\task;
+
+class usersmap_update_geoloc extends \core\task\scheduled_task {
+
+    public function get_name() {
+        // Shown in admin screens
+        return get_string('scheduled_task_title', 'block_usersmap');
+    }
+
+    public function execute() {
+		echo get_string('scheduled_task_start_message', 'block_usersmap') . PHP_EOL;
+    }
+}

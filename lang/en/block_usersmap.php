@@ -30,4 +30,5 @@ $string['usersmap:myaddinstance'] = 'Add a Users map block to the My Moodle page
 $string['pluginname'] = 'Users map block';
 $string['block_usersmap_title'] = 'Users map';
 $string['example_text'] = 'Howdy the great map :)';
-$string['cron_start_message'] = 'Updating users geographical coordinates !';
+$string['scheduled_task_title'] = 'Update users geographical coordinates';
+$string['scheduled_task_start_message'] = 'Updating users geographical coordinates !';

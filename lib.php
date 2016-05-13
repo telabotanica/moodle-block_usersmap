@@ -28,7 +28,3 @@
 function usersmap_generate_content() {
 	return get_string('example_text', 'block_usersmap');
 }
-
-function usersmap_update_geoloc() {
-	echo get_string('cron_start_message', 'block_usersmap') . PHP_EOL;
-}
