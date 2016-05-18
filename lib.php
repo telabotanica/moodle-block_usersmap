@@ -42,26 +42,13 @@ function usersmap_generate_content($config) {
 	$PAGE->requires->js('/blocks/usersmap/js/leaflet.js');
 	$PAGE->requires->js('/blocks/usersmap/js/leaflet.markercluster.js');
 	$PAGE->requires->js('/blocks/usersmap/js/usersmap.js');
+	$PAGE->requires->js('/blocks/usersmap/generate-map.php');
 
 	$content = '';
 
 	// Leaflet Map.
 	$content .= '<div id="usersmap-map" style="height: 180px;" class="">';
 	$content .= '</div>';
-	// Get all available users locations.
-	$r0 = "SELECT id, lat, lon as nb FROM " . $CFG->prefix . "block_usersmap";
-	$res = $DB->get_records_sql($r0, array());
-	if ($res) {
-		// Generate JS code for markers.
-		$jsmarkerscode = '<script type="text/javascript">';
-		foreach ($res as $r) {
-			$jsmarkerscode .= 'var marker_' . $r->id . ' = L.marker([' . $r->lat . ', ' . $r->lon . ']).addTo(usersmap);' . PHP_EOL;
-			$jsmarkerscode .= 'usersLayer.addLayer(marker_' . $r->id . ');' . PHP_EOL;
-		}
-		$jsmarkerscode .= 'usersmap.fitBounds(usersLayer.getBounds());' . PHP_EOL;
-		$jsmarkerscode .= '</script>' . PHP_EOL;
-		$content .= $jsmarkerscode;
-	}
 
 	// Count all active users in Moodle.
     $displaynbmoodleusers = false;

@@ -25,8 +25,28 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->component = 'block_usersmap';
-$plugin->version = 2016051815;
-$plugin->requires = 2014111000; // Moodle v2.8.
-$plugin->maturity = MATURITY_BETA;
-$plugin->release = "0.1";
+/**
+ * Generates a JS script to be appended after leaflet is loaded.
+ */
+
+global $CFG;
+global $DB;
+
+$content = '';
+
+// Get all available users locations.
+$r0 = "SELECT id, lat, lon FROM " . $CFG->prefix . "block_usersmap WHERE lat IS NOT NULL AND lon IS NOT NULL LIMIT 20";
+$res = $DB->get_records_sql($r0, array());
+if ($res) {
+	// Generate JS code for markers.
+	$jsmarkerscode = '<script type="text/javascript">' . PHP_EOL;
+	foreach ($res as $r) {
+		$jsmarkerscode .= 'var marker_' . $r->id . ' = L.marker([' . $r->lat . ', ' . $r->lon . ']);' . PHP_EOL;
+		$jsmarkerscode .= 'usersLayer.addLayer(marker_' . $r->id . ');' . PHP_EOL;
+	}
+	$jsmarkerscode .= 'usersmap.fitBounds(usersLayer.getBounds());' . PHP_EOL;
+	$jsmarkerscode .= '</script>' . PHP_EOL;
+	$content .= $jsmarkerscode;
+}
+
+echo $content; // Output JS.
