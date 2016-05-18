@@ -37,10 +37,12 @@ function usersmap_generate_content($config) {
 	$PAGE->requires->css('/blocks/usersmap/css/leaflet.css');
 	$PAGE->requires->css('/blocks/usersmap/css/MarkerCluster.css');
 	$PAGE->requires->css('/blocks/usersmap/css/MarkerCluster.Default.css');
+	$PAGE->requires->css('/blocks/usersmap/css/Control.FullScreen.css');
 	$PAGE->requires->css('/blocks/usersmap/css/usersmap.css');
 
 	$PAGE->requires->js('/blocks/usersmap/js/leaflet.js', true);
 	$PAGE->requires->js('/blocks/usersmap/js/leaflet.markercluster.js', true);
+	$PAGE->requires->js('/blocks/usersmap/js/Control.FullScreen.js', true);
 	$PAGE->requires->js('/blocks/usersmap/js/usersmap.js', true);
 
 	$content = '';
@@ -53,7 +55,7 @@ function usersmap_generate_content($config) {
 	$jsinitmapcode = '';
 	$jsinitmapcode .= '<script type="text/javascript">' . PHP_EOL;
 	$jsinitmapcode .= "console.log('inline carto init 3000');" . PHP_EOL;
-	$jsinitmapcode .= "var usersmap = L.map('usersmap-map').setView([51.505, -0.09], 13);" . PHP_EOL;
+	$jsinitmapcode .= "var usersmap = L.map('usersmap-map', {fullscreenControl: true, fullscreenControlOptions: {position: 'topleft'}});" . PHP_EOL;
 	$jsinitmapcode .= "coucheOSM.addTo(usersmap);" . PHP_EOL;
 	$jsinitmapcode .= "usersLayer.addTo(usersmap);" . PHP_EOL;
 	// Change default icon because generated path is not understood by Moodle.
