@@ -50,10 +50,14 @@ function usersmap_generate_content($config) {
 	$content .= '</div>';
 
 	// Inline Javascript code because declaration order is important.
-	$content .= "console.log('inline carto init 3000');" . PHP_EOL;
-	$content .= "var usersmap = L.map('usersmap-map').setView([51.505, -0.09], 13);" . PHP_EOL;
-	$content .= "coucheOSM.addTo(usersmap);" . PHP_EOL;
-	$content .= "usersLayer.addTo(usersmap);" . PHP_EOL;
+	$jsinitmapcode = '';
+	$jsinitmapcode .= '<script type="text/javascript">' . PHP_EOL;
+	$jsinitmapcode .= "console.log('inline carto init 3000');" . PHP_EOL;
+	$jsinitmapcode .= "var usersmap = L.map('usersmap-map').setView([51.505, -0.09], 13);" . PHP_EOL;
+	$jsinitmapcode .= "coucheOSM.addTo(usersmap);" . PHP_EOL;
+	$jsinitmapcode .= "usersLayer.addTo(usersmap);" . PHP_EOL;
+	$jsinitmapcode .= '</script>' . PHP_EOL;
+	$content .= $jsinitmapcode;
 
 	// Get all available users locations.
 	$r0 = "SELECT id, lat, lon FROM " . $CFG->prefix . "block_usersmap WHERE lat IS NOT NULL AND lon IS NOT NULL LIMIT 20";
