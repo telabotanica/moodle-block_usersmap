@@ -87,6 +87,7 @@ function usersmap_generate_content($config) {
 			}
 		}
 		$jsmarkerscode .= 'usersmap.fitBounds(usersLayer.getBounds());' . PHP_EOL;
+		$jsmarkerscode .= 'usersmap.setZoom(1);' . PHP_EOL;
 		$jsmarkerscode .= '</script>' . PHP_EOL;
 		$content .= $jsmarkerscode;
 	}
