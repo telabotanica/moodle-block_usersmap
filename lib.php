@@ -28,7 +28,7 @@
 /**
  * Generates the block contents : map and / or text
  */
-function usersmap_generate_content() {
+function usersmap_generate_content($config) {
 	global $DB;
 	global $CFG;
 	global $COURSE;
@@ -36,7 +36,11 @@ function usersmap_generate_content() {
 	$content = '';
 
 	// Count all active users in Moodle.
-	if (! empty($this->config->displaynbmoodleusers) && ($this->config->displaynbmoodleusers == 1)) {
+    $displaynbmoodleusers = false;
+    if (isset($config->displaynbmoodleusers)) {
+        $displaynbmoodleusers = $config->displaynbmoodleusers;
+    }
+    if ($displaynbmoodleusers) {
 		$r1 = "SELECT count(*) as nb FROM " . $CFG->prefix . "user WHERE confirmed = 1 AND deleted = 0 AND suspended = 0";
 		$res = $DB->get_records_sql($r1, array());
 		$singleresult = array_shift($res);
@@ -45,7 +49,11 @@ function usersmap_generate_content() {
 	}
 
 	// Count all users enrolled in the current course.
-	if (! empty($this->config->displaynbenrolledusers) && ($this->config->displaynbenrolledusers == 1)) {
+    $displaynbenrolledusers = true;
+    if (isset($config->displaynbenrolledusers)) {
+        $displaynbenrolledusers = $config->displaynbenrolledusers;
+    }
+    if ($displaynbenrolledusers) {
 		if ($COURSE->id != 1) { // Course n°1 is platform home.
 			$r2 = "SELECT count(DISTINCT userid) as nb "
 				. "FROM " . $CFG->prefix . "user_enrolments ue "

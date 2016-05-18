@@ -30,7 +30,8 @@ defined('MOODLE_INTERNAL') || die;
 // Secttings header title according to language file.
 $settings->add(new admin_setting_heading(
     'configheader',
-    get_string('blocksettings', 'block')
+    get_string('blocksettings', 'block'),
+    ''
 ));
 
 // Url scheme of geolocation webservice.

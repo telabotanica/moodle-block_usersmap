@@ -52,7 +52,7 @@ class block_usersmap extends block_base {
             return $this->content;
         }
         $this->content = new stdClass;
-        $this->content->text = usersmap_generate_content();
+        $this->content->text = usersmap_generate_content($this->config);
 
         return $this->content;
     }
