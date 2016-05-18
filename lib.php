@@ -48,6 +48,13 @@ function usersmap_generate_content($config) {
 	// Leaflet Map.
 	$content .= '<div id="usersmap-map" style="height: 180px;" class="">';
 	$content .= '</div>';
+
+	// Inline Javascript code because declaration order is important.
+	$content .= "console.log('inline carto init 3000');" . PHP_EOL;
+	$content .= "var usersmap = L.map('usersmap-map').setView([51.505, -0.09], 13);" . PHP_EOL;
+	$content .= "coucheOSM.addTo(usersmap);" . PHP_EOL;
+	$content .= "usersLayer.addTo(usersmap);" . PHP_EOL;
+
 	// Get all available users locations.
 	$r0 = "SELECT id, lat, lon FROM " . $CFG->prefix . "block_usersmap WHERE lat IS NOT NULL AND lon IS NOT NULL LIMIT 20";
 	$res = $DB->get_records_sql($r0, array());

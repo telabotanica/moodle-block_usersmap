@@ -16,9 +16,3 @@ coucheOSM = new L.TileLayer("http://osm.tela-botanica.org/tuiles/osmfr/{z}/{x}/{
 usersLayer = new L.MarkerClusterGroup({
 	disableClusteringAtZoom : 10
 });
-
-var usersmap = L.map('usersmap-map').setView([51.505, -0.09], 13);
-coucheOSM.addTo(usersmap);
-usersLayer.addTo(usersmap);
-
-console.log('carto init fini');
