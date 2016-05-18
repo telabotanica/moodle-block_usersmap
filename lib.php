@@ -60,7 +60,7 @@ function usersmap_generate_content($config) {
 	$content .= $jsinitmapcode;
 
 	// Get all available users locations.
-	$r0 = "SELECT id, lat, lon FROM " . $CFG->prefix . "block_usersmap WHERE lat IS NOT NULL AND lon IS NOT NULL LIMIT 20";
+	$r0 = "SELECT id, lat, lon FROM " . $CFG->prefix . "block_usersmap WHERE lat IS NOT NULL AND lon IS NOT NULL";
 	$res = $DB->get_records_sql($r0, array());
 	if ($res) {
 		// Generate JS code for markers.
