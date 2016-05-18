@@ -56,10 +56,16 @@ function usersmap_generate_content($config) {
 	$jsinitmapcode .= "var usersmap = L.map('usersmap-map').setView([51.505, -0.09], 13);" . PHP_EOL;
 	$jsinitmapcode .= "coucheOSM.addTo(usersmap);" . PHP_EOL;
 	$jsinitmapcode .= "usersLayer.addTo(usersmap);" . PHP_EOL;
+	// Change default icon because generated path is not understood by Moodle.
+	$markerurl = new moodle_url('/blocks/usersmap/js/images/marker-icon.png');
+	$markershadowurl = new moodle_url('/blocks/usersmap/js/images/marker-shadow.png');
+	$jsinitmapcode .= "var newDefaultMarkerIcon = L.icon({iconUrl: '$markerurl', shaowUrl: '$markershadowurl'});";
+	$jsinitmapcode .= "L.Marker.mergeOptions({icon: newDefaultMarkerIcon});";
 	$jsinitmapcode .= '</script>' . PHP_EOL;
 	$content .= $jsinitmapcode;
 
 	// Get all available users locations.
+	// @TODO Load GeoJSON directly from the database ? Which performance ?
 	$r0 = "SELECT id, lat, lon FROM " . $CFG->prefix . "block_usersmap WHERE lat IS NOT NULL AND lon IS NOT NULL";
 	$res = $DB->get_records_sql($r0, array());
 	if ($res) {
