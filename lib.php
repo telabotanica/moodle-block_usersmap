@@ -54,7 +54,6 @@ function usersmap_generate_content($config) {
 	// Inline Javascript code because declaration order is important.
 	$jsinitmapcode = '';
 	$jsinitmapcode .= '<script type="text/javascript">' . PHP_EOL;
-	$jsinitmapcode .= "console.log('inline carto init 3000');" . PHP_EOL;
 	$jsinitmapcode .= "var usersmap = L.map('usersmap-map', {fullscreenControl: true, fullscreenControlOptions: {position: 'topleft'}});" . PHP_EOL;
 	$jsinitmapcode .= "coucheOSM.addTo(usersmap);" . PHP_EOL;
 	$jsinitmapcode .= "usersLayer.addTo(usersmap);" . PHP_EOL;
