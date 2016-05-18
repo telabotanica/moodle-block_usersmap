@@ -66,14 +66,20 @@ function usersmap_generate_content($config) {
 
 	// Get all available users locations.
 	// @TODO Load GeoJSON directly from the database ? Which performance ?
-	$r0 = "SELECT id, lat, lon FROM " . $CFG->prefix . "block_usersmap WHERE lat IS NOT NULL AND lon IS NOT NULL";
+	$r0 = "SELECT lat, lon , city, count(*) as nb "
+		. "FROM " . $CFG->prefix . "block_usersmap "
+		. "WHERE lat IS NOT NULL AND lon IS NOT NULL "
+		. "GROUP BY lat, lon"; // City should always be the same for a given lat,lon pair.
 	$res = $DB->get_records_sql($r0, array());
 	if ($res) {
 		// Generate JS code for markers.
 		$jsmarkerscode = '<script type="text/javascript">' . PHP_EOL;
+		$markerid = 1;
 		foreach ($res as $r) {
-			$jsmarkerscode .= 'var marker_' . $r->id . ' = L.marker([' . $r->lat . ', ' . $r->lon . ']);' . PHP_EOL;
-			$jsmarkerscode .= 'usersLayer.addLayer(marker_' . $r->id . ');' . PHP_EOL;
+			$jsmarkerscode .= 'var marker_' . $markerid . ' = L.marker([' . $r->lat . ', ' . $r->lon . ']);' . PHP_EOL;
+			$jsmarkerscode .= 'usersLayer.addLayer(marker_' . $markerid . ');' . PHP_EOL;
+			$jsmarkerscode .= 'marker_' . $markerid . '.bindPopup("' . $r->city . ' : ' . $r->nb . '").openPopup();';
+			$markerid++;
 		}
 		$jsmarkerscode .= 'usersmap.fitBounds(usersLayer.getBounds());' . PHP_EOL;
 		$jsmarkerscode .= '</script>' . PHP_EOL;
@@ -153,11 +159,11 @@ function usersmap_update_geolocation($updateeveryone=false) {
 				$lat = $info->centre_lat;
 				$lon = $info->centre_lng;
 			}
-			$values[] = "(" . $r->id . ", $lat, $lon)";
+			$values[] = "(" . $r->id . ", $lat, $lon, $r->city)";
 		}
 		$valuesstring = implode(',', $values);
 		// @TODO if update all, truncate table first or something
-		$qins = "INSERT INTO " . $CFG->prefix . "block_usersmap(userid, lat, lon) VALUES $valuesstring";
+		$qins = "INSERT INTO " . $CFG->prefix . "block_usersmap(userid, lat, lon, city) VALUES $valuesstring";
 		//var_dump($qins);
 		$DB->execute($qins);
 	}

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/usersmap/db" VERSION="20160513" COMMENT="XMLDB file for Moodle blocks/usersmap"
+<XMLDB PATH="blocks/usersmap/db" VERSION="20160518" COMMENT="XMLDB file for Moodle blocks/usersmap"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -10,10 +10,11 @@
         <FIELD NAME="userid" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" COMMENT="ID of Moodle user in table &quot;users&quot;"/>
         <FIELD NAME="lat" TYPE="number" LENGTH="15" NOTNULL="false" SEQUENCE="false" DECIMALS="12" COMMENT="WGS84 latitude"/>
         <FIELD NAME="lon" TYPE="number" LENGTH="15" NOTNULL="false" SEQUENCE="false" DECIMALS="12" COMMENT="WGS84 longitude"/>
+        <FIELD NAME="city" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="City specified in the user's profile, used to obtain the coordinates"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="userid" TYPE="foreign-unique" FIELDS="userid" REFTABLE="users" REFFIELDS="id" COMMENT="Foreign key on userid that references users.id"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="users" REFFIELDS="id" COMMENT="Foreign key on field userid, referencing field id on table users"/>
       </KEYS>
     </TABLE>
   </TABLES>

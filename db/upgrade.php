@@ -41,10 +41,11 @@ function xmldb_block_usersmap_upgrade($oldversion) {
         $table->add_field('userid', XMLDB_TYPE_INTEGER, '11', null, XMLDB_NOTNULL, null, null);
         $table->add_field('lat', XMLDB_TYPE_NUMBER, '15, 12', null, null, null, null);
         $table->add_field('lon', XMLDB_TYPE_NUMBER, '15, 12', null, null, null, null);
+        $table->add_field('city', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, null);
 
         // Adding keys to table block_usersmap.
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
-        $table->add_key('userid', XMLDB_KEY_FOREIGN_UNIQUE, array('userid'), 'users', array('id'));
+        $table->add_key('userid', XMLDB_KEY_FOREIGN, array('userid'), 'users', array('id'));
 
         // Conditionally launch create table for block_usersmap.
         if (!$dbman->table_exists($table)) {
