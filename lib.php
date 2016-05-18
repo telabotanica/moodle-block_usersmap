@@ -66,7 +66,7 @@ function usersmap_generate_content($config) {
 
 	// Get all available users locations.
 	// @TODO Load GeoJSON directly from the database ? Which performance ?
-	$r0 = "SELECT lat, lon , city, count(*) as nb "
+	$r0 = "SELECT id, lat, lon , city, count(*) as nb "
 		. "FROM " . $CFG->prefix . "block_usersmap "
 		. "WHERE lat IS NOT NULL AND lon IS NOT NULL "
 		. "GROUP BY lat, lon"; // City should always be the same for a given lat,lon pair.
@@ -76,10 +76,15 @@ function usersmap_generate_content($config) {
 		$jsmarkerscode = '<script type="text/javascript">' . PHP_EOL;
 		$markerid = 1;
 		foreach ($res as $r) {
-			$jsmarkerscode .= 'var marker_' . $markerid . ' = L.marker([' . $r->lat . ', ' . $r->lon . ']);' . PHP_EOL;
-			$jsmarkerscode .= 'usersLayer.addLayer(marker_' . $markerid . ');' . PHP_EOL;
-			$jsmarkerscode .= 'marker_' . $markerid . '.bindPopup("' . $r->city . ' : ' . $r->nb . '").openPopup();';
-			$markerid++;
+			// Add multiple instance of the marker so that the clustering
+			// plugin shows the right number of users in its icons.
+			$realnbusers = $r->nb;
+			for ($i = 0; $i < $realnbusers; $i++) {
+				$jsmarkerscode .= 'var marker_' . $markerid . ' = L.marker([' . $r->lat . ', ' . $r->lon . ']);' . PHP_EOL;
+				$jsmarkerscode .= 'usersLayer.addLayer(marker_' . $markerid . ');' . PHP_EOL;
+				$jsmarkerscode .= 'marker_' . $markerid . '.bindPopup("' . $r->city . ' : ' . $r->nb . '").openPopup();';
+				$markerid++;
+			}
 		}
 		$jsmarkerscode .= 'usersmap.fitBounds(usersLayer.getBounds());' . PHP_EOL;
 		$jsmarkerscode .= '</script>' . PHP_EOL;
