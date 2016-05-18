@@ -46,7 +46,7 @@ function usersmap_generate_content($config) {
 	$content = '';
 
 	// Leaflet Map.
-	$content .= '<div id="usersmap-map" style="height: 180px;" class="">';
+	$content .= '<div id="usersmap-map" class="">';
 	$content .= '</div>';
 
 	// Inline Javascript code because declaration order is important.
@@ -134,7 +134,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 		$q .= "AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
 	}
 	$q .= " ORDER BY RAND()"; // For debug purposes.
-	$q .= " LIMIT 10";
+	$q .= " LIMIT 100"; // 100 at a time to spare the geolocation server's life.
 
 	$res = $DB->get_records_sql($q, array());
 
