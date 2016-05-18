@@ -32,8 +32,17 @@ function usersmap_generate_content($config) {
 	global $DB;
 	global $CFG;
 	global $COURSE;
+	global $PAGE;
+
+	$PAGE->requires->css(new moodle_url('/block/usersmap/css/leaflet.css'));
+	$PAGE->requires->js(new moodle_url('/block/usersmap/js/leaflet.js'));
+	$PAGE->requires->js(new moodle_url('/block/usersmap/js/usersmap.js'));
 
 	$content = '';
+
+	// Leaflet Map.
+	$content .= '<div id="block_usersmap-map" style="height: 180px;" class="">';
+	$content .= '</div>';
 
 	// Count all active users in Moodle.
     $displaynbmoodleusers = false;
@@ -45,7 +54,7 @@ function usersmap_generate_content($config) {
 		$res = $DB->get_records_sql($r1, array());
 		$singleresult = array_shift($res);
 		$nbusers = $singleresult->nb;
-		$content .= $nbusers . get_string('nb_moodle_users', 'block_usersmap');
+		$content .= "<p>" . $nbusers . ' ' . get_string('nb_moodle_users', 'block_usersmap') . "</p>";
 	}
 
 	// Count all users enrolled in the current course.
@@ -62,7 +71,7 @@ function usersmap_generate_content($config) {
 			$res = $DB->get_records_sql($r2, array());
 			$singleresult = array_shift($res);
 			$nbenrolledusers = $singleresult->nb;
-			$content .= $nbenrolledusers . get_string('nb_enrolled_users', 'block_usersmap');
+			$content .= "<p>" . $nbenrolledusers . ' ' . get_string('nb_enrolled_users', 'block_usersmap') . "</p>";
 		}
 	}
 
