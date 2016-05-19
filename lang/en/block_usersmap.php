@@ -41,9 +41,11 @@ $string['config_display_nb_enrolled_users'] = 'Display number of users enrolled 
 
 $string['geolocation_url_scheme_text'] = 'Geolocation service URL scheme';
 $string['geolocation_url_scheme_text_desc'] = 'Pseudo-field {city} will be replaced by user\'s city';
-$string['tileserver_url_scheme_text'] = 'Tileserver URL scheme (base map layer)';
+$string['tileserver_url_scheme_text'] = 'Tile server URL scheme (base map layer)';
 $string['tileserver_url_scheme_text_desc'] = 'Pseudo-fields {x}, {y} and {z} will be replaced by tiles indices and zoom level';
 $string['tileserver_custom'] = 'Custom';
+$string['tileserver_select'] = 'Tile server';
+$string['tileserver_select_desc'] = "Definew which base layer will be displayed on the map";
 $string['tileserver_max_zoom_text'] = 'Max zoom';
 $string['tileserver_max_zoom_text_desc'] = "Only concerns custom tile server";
 $string['tileserver_attribution_text'] = 'Legal attribution to be displayed at the bottom of the map';
