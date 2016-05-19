@@ -27,7 +27,7 @@
 
 $string['usersmap:addinstance'] = 'Ajouter un bloc Carte des utilisateurs';
 $string['usersmap:myaddinstance'] = 'Ajouter un bloc Carte des utilisateurs à votre Tableau de bord';
-$string['pluginname'] = 'Bloc Carte des utilisateurs';
+$string['pluginname'] = 'Carte des utilisateurs';
 $string['block_usersmap_title'] = 'Carte des utilisateurs';
 $string['example_text'] = 'Salut la carte de dingo :)';
 

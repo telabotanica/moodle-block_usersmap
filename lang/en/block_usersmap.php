@@ -27,7 +27,7 @@
 
 $string['usersmap:addinstance'] = 'Add a Users map block';
 $string['usersmap:myaddinstance'] = 'Add a Users map block to the My Moodle page';
-$string['pluginname'] = 'Users map block';
+$string['pluginname'] = 'Users map';
 $string['block_usersmap_title'] = 'Users map';
 $string['example_text'] = 'Howdy the great map :)';
 
