@@ -271,7 +271,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 				case 'custom':
 				default:
 					$url = str_replace('{city}', urlencode($r->city), $baseurl);
-					$url = str_replace('{country}', urlencode($r->country), $baseurl);
+					$url = str_replace('{country}', urlencode($r->country), $url);
 					//var_dump($url);
 					$info = file_get_contents($url);
 					if ($info) {
