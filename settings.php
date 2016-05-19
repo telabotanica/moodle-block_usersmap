@@ -34,7 +34,27 @@ $settings->add(new admin_setting_heading(
     ''
 ));
 
-// Url scheme of geolocation webservice.
+// Geolocation webservice (predefined choices).
+$settings->add(new admin_setting_configselect(
+    'usersmap/Geolocation_Server',
+    get_string('geolocation_server_select', 'block_usersmap'),
+    get_string('geolocation_server_select_desc', 'block_usersmap'),
+    'geonames',
+	array(
+		'geonames' => 'GeoNames',
+		'custom' => get_string('tileserver_custom', 'block_usersmap')
+	)
+));
+
+// GeoNames user name.
+$settings->add(new admin_setting_configtext(
+    'usersmap/Geonames_Username',
+    get_string('geonames_username_text', 'block_usersmap'),
+    get_string('geonames_username_text_desc', 'block_usersmap'),
+    ''
+));
+
+// Url scheme of custom geolocation webservice.
 $settings->add(new admin_setting_configtext(
     'usersmap/Geolocation_Url_Scheme',
     get_string('geolocation_url_scheme_text', 'block_usersmap'),
@@ -42,8 +62,21 @@ $settings->add(new admin_setting_configtext(
     ''
 ));
 
-// @TODO parameterize geolocation type / fields mapping (where to find "lat"
-// and "lon" in service results)
+// Field name to retrieve latitude, in custom geolocation webservice result.
+$settings->add(new admin_setting_configtext(
+    'usersmap/Geolocation_Lat_Field',
+    get_string('geolocation_lat_field_text', 'block_usersmap'),
+    get_string('geolocation_lat_field_text_desc', 'block_usersmap'),
+    ''
+));
+
+// Field name to retrieve longitude, in custom geolocation webservice result.
+$settings->add(new admin_setting_configtext(
+    'usersmap/Geolocation_Lon_Field',
+    get_string('geolocation_lon_field_text', 'block_usersmap'),
+    get_string('geolocation_lon_field_text_desc', 'block_usersmap'),
+    ''
+));
 
 // Tile server (predefined choices).
 $settings->add(new admin_setting_configselect(

@@ -45,8 +45,6 @@ $string['config_what_to_display_omu'] = 'Tous les utilisateurs de Moodle actuell
 $string['config_what_to_display_aeu'] = 'Tous les utilisateurs inscrits au cours';
 $string['config_what_to_display_oeu'] = 'Tous les utilisateurs inscrits au cours et actuellement en ligne';
 
-$string['geolocation_url_scheme_text'] = 'Schéma d\'url du service de géolocalisation';
-$string['geolocation_url_scheme_text_desc'] = 'Les pseudo-champs {city} et {country} seront remplacés par la ville et le pays de l\'utilisateur';
 $string['tileserver_url_scheme_text'] = 'Schéma d\'url du serveur de tuiles (fond de carte)';
 $string['tileserver_url_scheme_text_desc'] = 'Les pseudo-champs {x}, {y} et {z} seront remplacés par les indices de tuiles et le niveau de zoom';
 $string['tileserver_custom'] = 'Personnalisé';
@@ -56,6 +54,16 @@ $string['tileserver_max_zoom_text'] = 'Zoom maximal';
 $string['tileserver_max_zoom_text_desc'] = "Ne s'applique qu'au serveur de tuiles personnalisé";
 $string['tileserver_attribution_text'] = 'Mention légale à indiquer au bas de la carte';
 $string['tileserver_attribution_text_desc'] = "Ne s'applique qu'au serveur de tuiles personnalisé";
+$string['geolocation_server_select'] = 'Service de géolocalisation';
+$string['geolocation_server_select_desc'] = "Détermine le service de géolocalisation qui sera utilisé";
+$string['geolocation_url_scheme_text'] = 'Schéma d\'url du service de géolocalisation personnalisé';
+$string['geolocation_url_scheme_text_desc'] = 'Ne s\'applique qu\'au service de géolocalisation personnalisé. Les pseudo-champs {city} et {country} seront remplacés par la ville et le pays de l\'utilisateur. Ce service doit retourner des données au format JSON';
+$string['geonames_username_text'] = "Nom d'utilisateur GeoNames (requis)";
+$string['geonames_username_text_desc'] = "Ne s'applique qu'au service de géolocalisation GeoNames. Se rendre sur http://www.geonames.org pour créer un compte";
+$string['geolocation_lat_field_text'] = "Champ dans lequel récupérer la latitude";
+$string['geolocation_lat_field_text_desc'] = "Ne s'applique qu'au service de géolocalisation personnalisé. Le champ sera extrait du JSON retourné par le service";
+$string['geolocation_lon_field_text'] = "Champ dans lequel récupérer la longitude";
+$string['geolocation_lon_field_text_desc'] = "Ne s'applique qu'au service de géolocalisation personnalisé. Le champ sera extrait du JSON retourné par le service";
 
 $string['scheduled_task_title'] = 'Mise à jour des coordonnées géographiques des utilisateurs';
 $string['scheduled_task_title_all'] = 'Mise à jour des coordonnées géographiques des utilisateurs (TOUS)';

@@ -203,39 +203,86 @@ function usersmap_update_geolocation($updateeveryone=false) {
 	global $DB;
 	global $CFG;
 
-	$baseurl = get_config('usersmap', 'Geolocation_Url_Scheme');
-	if (empty($baseurl)) {
-		echo "ERROR Geolocation_Url_Scheme is not set";
-		return false;
-	}
-
 	// Query all users having a city set in their profile
 	$q = "SELECT id, city, country FROM " . $CFG->prefix . "user WHERE city != ''";
 	if (! $updateeveryone) { // Only update users having no geolocation yet.
 		$q .= "AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
 	}
-	//$q .= " ORDER BY RAND()"; // For debug purposes.
-	$q .= " LIMIT 100"; // 100 at a time to spare the geolocation server's life.
+	$q .= " ORDER BY RAND()"; // For debug purposes.
+	$q .= " LIMIT 10"; // 100 at a time to spare the geolocation server's life.
 
 	$res = $DB->get_records_sql($q, array());
 
+	// Setup the geolocation service befor the loop.
+	$geolocationservice = get_config('usersmap', 'Geolocation_Server');
+	$baseurl = '';
+	$latfield = 'lat';
+	$lonfield = 'lon';
+	switch($geolocationservice) {
+		case 'geonames':
+			$baseurl = "http://api.geonames.org/searchJSON?maxRows=1";
+			$geonamesusername = get_config('usersmap', 'Geonames_Username');
+			if (empty($geonamesusername)) {
+				echo "ERROR Geolocation_Server is set to 'Geonames' but Geonames_Username is not set";
+				return false;
+			}
+			$baseurl .= "&username=$geonamesusername";
+			break;
+		case 'custom':
+		default:
+			$baseurl = get_config('usersmap', 'Geolocation_Url_Scheme');
+			if (empty($baseurl)) {
+				echo "ERROR Geolocation_Server is set to 'custom' but Geolocation_Url_Scheme is not set";
+				return false;
+			}
+			if (! empty(get_config('usersmap', 'Geolocation_Lat_Field'))) {
+				$latfield = get_config('usersmap', 'Geolocation_Lat_Field');
+			}
+			if (! empty(get_config('usersmap', 'Geolocation_Lon_Field'))) {
+				$lonfield = get_config('usersmap', 'Geolocation_Lon_Field');
+			}
+			break;
+	}
+
+	// Get geolocation data for each user.
 	$values = array();
 	if ($res) {
 		foreach ($res as $r) {
 			//var_dump($r);
-			$url = str_replace('{city}', $r->city, $baseurl);
-			$url = str_replace('{country}', $r->country, $baseurl);
-			//var_dump($url);
-			$info = file_get_contents($url);
 			$lat = 'NULL';
 			$lon = 'NULL';
-			if ($info) {
-				$info = json_decode($info);
-				//var_dump($info);
-				$lat = $info->centre_lat;
-				$lon = $info->centre_lng;
+			switch($geolocationservice) {
+				case 'geonames':
+					$url = $baseurl;
+					$url .= "&q=" . urlencode($r->city);
+					$url .= "&country=" . urlencode($r->country);
+					$info = file_get_contents($url);
+					//var_dump($url);
+					if ($info) {
+						$info = json_decode($info, true);
+						if (isset($info['geonames']) && isset($info['geonames'][0])) {
+							//var_dump($info);
+							$lat = $info['geonames'][0]['lat'];
+							$lon = $info['geonames'][0]['lng'];
+							$values[] = "(" . $r->id . ", $lat, $lon, $r->city)";
+						}
+					}
+					break;
+				case 'custom':
+				default:
+					$url = str_replace('{city}', urlencode($r->city), $baseurl);
+					$url = str_replace('{country}', urlencode($r->country), $baseurl);
+					//var_dump($url);
+					$info = file_get_contents($url);
+					if ($info) {
+						$info = json_decode($info, true);
+						//var_dump($info);
+						$lat = $info[$latfield];
+						$lon = $info[$lonfield];
+					}
+					$values[] = "(" . $r->id . ", $lat, $lon, $r->city)";
+					break;
 			}
-			$values[] = "(" . $r->id . ", $lat, $lon, $r->city)";
 		}
 		$valuesstring = implode(',', $values);
 		// @TODO if update all, truncate table first or something
