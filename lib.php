@@ -235,10 +235,10 @@ function usersmap_update_geolocation($updateeveryone=false) {
 				echo "ERROR Geolocation_Server is set to 'custom' but Geolocation_Url_Scheme is not set";
 				return false;
 			}
-			if (! empty(get_config('usersmap', 'Geolocation_Lat_Field'))) {
+			if (get_config('usersmap', 'Geolocation_Lat_Field') != '') {
 				$latfield = get_config('usersmap', 'Geolocation_Lat_Field');
 			}
-			if (! empty(get_config('usersmap', 'Geolocation_Lon_Field'))) {
+			if (get_config('usersmap', 'Geolocation_Lon_Field') != '') {
 				$lonfield = get_config('usersmap', 'Geolocation_Lon_Field');
 			}
 			break;
