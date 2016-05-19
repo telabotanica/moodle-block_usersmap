@@ -60,14 +60,14 @@ function usersmap_generate_content($config) {
 	switch ($tileservermode) {
 		case 'osm':
 			$jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',"
-				. "{minZoom: 8, maxZoom: 12, attribution: 'Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors'});";
+				. "{maxZoom: 20, attribution: 'Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors'});";
 			break;
 		case 'gstreets':
 			$jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',"
 				. "{maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']});";
 			break;
 		case 'gsatellite':
-			$jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',"
+			$jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',"
 				. "{maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']});";
 			break;
 		case 'custom':
