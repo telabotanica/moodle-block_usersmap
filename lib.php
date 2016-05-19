@@ -162,8 +162,8 @@ function usersmap_generate_content($config) {
 		$singleresult = array_shift($res);
 		$nbusers = $singleresult->nb;
 		$stringformat = get_string('config_display_nb_moodle_users_format_default', 'block_usersmap');
-		if (! empty(get_string('config_display_nb_moodle_users_format', 'block_usersmap'))) {
-			$stringformat = get_string('config_display_nb_moodle_users_format', 'block_usersmap');
+		if (isset($config->displaynbmoodleusers_format)) {
+			$stringformat = $config->displaynbmoodleusers_format;
 		}
 		$message = str_replace('{nb}', $nbusers, $stringformat);
 		$content .= "<p>$message</p>";
@@ -184,8 +184,8 @@ function usersmap_generate_content($config) {
 			$singleresult = array_shift($res);
 			$nbenrolledusers = $singleresult->nb;
 			$stringformat = get_string('config_display_nb_enrolled_users_format_default', 'block_usersmap');
-			if (! empty(get_string('config_display_nb_enrolled_users_format', 'block_usersmap'))) {
-				$stringformat = get_string('config_display_nb_enrolled_users_format', 'block_usersmap');
+			if (isset($config->displaynbenrolledusers_format)) {
+				$stringformat = $config->displaynbenrolledusers_format;
 			}
 			$message = str_replace('{nb}', $nbenrolledusers, $stringformat);
 			$content .= "<p>$message</p>";
