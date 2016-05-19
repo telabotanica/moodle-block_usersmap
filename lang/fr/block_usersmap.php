@@ -31,13 +31,14 @@ $string['pluginname'] = 'Carte des utilisateurs';
 $string['block_usersmap_title'] = 'Carte des utilisateurs';
 $string['example_text'] = 'Salut la carte de dingo :)';
 
-$string['nb_moodle_users'] = 'utilisateurs sur Moodle';
-$string['nb_enrolled_users'] = 'utilisateurs dans ce cours';
-
 $string['error_tilserver_url_not_set'] = 'Le serveur de tuiles est réglé sur "personnalisé" mais l\'URL du serveur de tuiles n\'est pas définie';
 
 $string['config_display_nb_moodle_users'] = 'Afficher le nombre d\'utilisateurs de Moodle sous la carte';
 $string['config_display_nb_enrolled_users'] = 'Afficher le nombre d\'utilisateurs inscrits au cours actuel sous la carte';
+$string['config_display_nb_moodle_users_format'] = "Format pour l'affichage du nombre d'utilisateurs de Moodle ({nb} sera remplacé par le nombre)";
+$string['config_display_nb_moodle_users_format_default'] = '{nb} utilisateurs sur Moodle';
+$string['config_display_nb_enrolled_users_format'] = "Format pour l'affichage du nombre d'utilisateurs du cours ({nb} sera remplacé par le nombre)";
+$string['config_display_nb_enrolled_users_format_default'] = '{nb} utilisateurs dans ce cours';
 $string['config_what_to_display'] = 'Quels utilisateurs afficher sur la carte ?';
 $string['config_what_to_display_amu'] = 'Tous les utilisateurs de Moodle';
 $string['config_what_to_display_omu'] = 'Tous les utilisateurs de Moodle actuellement en ligne';
@@ -45,7 +46,7 @@ $string['config_what_to_display_aeu'] = 'Tous les utilisateurs inscrits au cours
 $string['config_what_to_display_oeu'] = 'Tous les utilisateurs inscrits au cours et actuellement en ligne';
 
 $string['geolocation_url_scheme_text'] = 'Schéma d\'url du service de géolocalisation';
-$string['geolocation_url_scheme_text_desc'] = 'Le pseudo-champ {city} sera remplacé par la ville de l\'utilisateur';
+$string['geolocation_url_scheme_text_desc'] = 'Les pseudo-champs {city} et {country} seront remplacés par la ville et le pays de l\'utilisateur';
 $string['tileserver_url_scheme_text'] = 'Schéma d\'url du serveur de tuiles (fond de carte)';
 $string['tileserver_url_scheme_text_desc'] = 'Les pseudo-champs {x}, {y} et {z} seront remplacés par les indices de tuiles et le niveau de zoom';
 $string['tileserver_custom'] = 'Personnalisé';

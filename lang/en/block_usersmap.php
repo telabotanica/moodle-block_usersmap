@@ -31,13 +31,14 @@ $string['pluginname'] = 'Users map';
 $string['block_usersmap_title'] = 'Users map';
 $string['example_text'] = 'Howdy the great map :)';
 
-$string['nb_moodle_users'] = 'users in Moodle';
-$string['nb_enrolled_users'] = 'users in this course';
-
 $string['error_tilserver_url_not_set'] = 'Tile server is set to "custom" but tile server URL is not set';
 
 $string['config_display_nb_moodle_users'] = 'Display number of Moodle users below the map';
 $string['config_display_nb_enrolled_users'] = 'Display number of users enrolled in the current course below the map';
+$string['config_display_nb_moodle_users_format'] = "Display format for the number of Moodle users ({nb} will be replaced by the number)";
+$string['config_display_nb_moodle_users_format_default'] = '{nb} users in Moodle';
+$string['config_display_nb_enrolled_users_format'] = "Display format for the number of users enrolled in the current course ({nb} will be replaced by the number)";
+$string['config_display_nb_enrolled_users_format_default'] = '{nb} users in this course';
 $string['config_what_to_display'] = 'Whiwh utilisateurs should the map show ?';
 $string['config_what_to_display_amu'] = 'All Moodle users';
 $string['config_what_to_display_omu'] = 'All Moodle users who are online at the moment';
@@ -45,7 +46,7 @@ $string['config_what_to_display_aeu'] = 'All the users enrolled in the course';
 $string['config_what_to_display_oeu'] = 'All the users enrolled in the course who are online at the moment';
 
 $string['geolocation_url_scheme_text'] = 'Geolocation service URL scheme';
-$string['geolocation_url_scheme_text_desc'] = 'Pseudo-field {city} will be replaced by user\'s city';
+$string['geolocation_url_scheme_text_desc'] = 'Pseudo-fields {city} and {country} will be replaced by user\'s city and country';
 $string['tileserver_url_scheme_text'] = 'Tile server URL scheme (base map layer)';
 $string['tileserver_url_scheme_text_desc'] = 'Pseudo-fields {x}, {y} and {z} will be replaced by tiles indices and zoom level';
 $string['tileserver_custom'] = 'Custom';

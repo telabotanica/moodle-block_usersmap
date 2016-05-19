@@ -161,7 +161,12 @@ function usersmap_generate_content($config) {
 		$res = $DB->get_records_sql($r1, array());
 		$singleresult = array_shift($res);
 		$nbusers = $singleresult->nb;
-		$content .= "<p>" . $nbusers . ' ' . get_string('nb_moodle_users', 'block_usersmap') . "</p>";
+		$stringformat = get_string('config_display_nb_moodle_users_format_default', 'block_usersmap');
+		if (! empty(get_string('config_display_nb_moodle_users_format', 'block_usersmap'))) {
+			$stringformat = get_string('config_display_nb_moodle_users_format', 'block_usersmap');
+		}
+		$message = str_replace('{nb}', $nbusers, $stringformat);
+		$content .= "<p>$message</p>";
 	}
 
 	// Count all users enrolled in the current course.
@@ -178,7 +183,12 @@ function usersmap_generate_content($config) {
 			$res = $DB->get_records_sql($r2, array());
 			$singleresult = array_shift($res);
 			$nbenrolledusers = $singleresult->nb;
-			$content .= "<p>" . $nbenrolledusers . ' ' . get_string('nb_enrolled_users', 'block_usersmap') . "</p>";
+			$stringformat = get_string('config_display_nb_enrolled_users_format_default', 'block_usersmap');
+			if (! empty(get_string('config_display_nb_enrolled_users_format', 'block_usersmap'))) {
+				$stringformat = get_string('config_display_nb_enrolled_users_format', 'block_usersmap');
+			}
+			$message = str_replace('{nb}', $nbenrolledusers, $stringformat);
+			$content .= "<p>$message</p>";
 		}
 	}
 
@@ -204,7 +214,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 	if (! $updateeveryone) { // Only update users having no geolocation yet.
 		$q .= "AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
 	}
-	$q .= " ORDER BY RAND()"; // For debug purposes.
+	//$q .= " ORDER BY RAND()"; // For debug purposes.
 	$q .= " LIMIT 100"; // 100 at a time to spare the geolocation server's life.
 
 	$res = $DB->get_records_sql($q, array());
@@ -214,6 +224,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 		foreach ($res as $r) {
 			//var_dump($r);
 			$url = str_replace('{city}', $r->city, $baseurl);
+			$url = str_replace('{country}', $r->country, $baseurl);
 			//var_dump($url);
 			$info = file_get_contents($url);
 			$lat = 'NULL';

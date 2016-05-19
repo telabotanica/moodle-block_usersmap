@@ -54,9 +54,19 @@ class block_usersmap_edit_form extends block_edit_form {
 		$mform->setDefault('config_displaynbmoodleusers', 0);
 		$mform->setType('config_displaynbmoodleusers', PARAM_RAW);
 
+		// Moodle users count sentence format.
+		$mform->addElement('text', 'config_displaynbmoodleusers_format', get_string('config_display_nb_moodle_users_format', 'block_usersmap'));
+		$mform->setDefault('config_displaynbmoodleusers_format', get_string('config_display_nb_moodle_users_format_default', 'block_usersmap'));
+		$mform->setType('config_displaynbmoodleusers_format', PARAM_RAW);
+
 		// Display enrolled users count.
 		$mform->addElement('advcheckbox', 'config_displaynbenrolledusers', get_string('config_display_nb_enrolled_users', 'block_usersmap'), '', null, array(0, 1));
 		$mform->setDefault('config_displaynbenrolledusers', 0);
 		$mform->setType('config_displaynbenrolledusers', PARAM_RAW);
+
+		// Enrolled users count sentence format.
+		$mform->addElement('text', 'config_displaynbenrolledusers_format', get_string('config_display_nb_enrolled_users_format', 'block_usersmap'));
+		$mform->setDefault('config_displaynbenrolledusers_format', get_string('config_display_nb_enrolled_users_format_default', 'block_usersmap'));
+		$mform->setType('config_displaynbenrolledusers_format', PARAM_RAW);
     }
 }
