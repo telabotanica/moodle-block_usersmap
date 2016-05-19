@@ -39,11 +39,12 @@ class block_usersmap_edit_form extends block_edit_form {
         // Section header title according to language file.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
-		// Display users count
+		// Display Moodle users count.
 		$mform->addElement('advcheckbox', 'config_displaynbmoodleusers', get_string('config_display_nb_moodle_users', 'block_usersmap'), '', null, array(0, 1));
 		$mform->setDefault('config_displaynbmoodleusers', 0);
 		$mform->setType('config_displaynbmoodleusers', PARAM_RAW);
 
+		// Display enrolled users count.
 		$mform->addElement('advcheckbox', 'config_displaynbenrolledusers', get_string('config_display_nb_enrolled_users', 'block_usersmap'), '', null, array(0, 1));
 		$mform->setDefault('config_displaynbenrolledusers', 1);
 		$mform->setType('config_displaynbenrolledusers', PARAM_RAW);

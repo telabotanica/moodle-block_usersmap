@@ -34,11 +34,20 @@ $string['example_text'] = 'Howdy the great map :)';
 $string['nb_moodle_users'] = 'users in Moodle';
 $string['nb_enrolled_users'] = 'users in this course';
 
+$string['error_tilserver_url_not_set'] = 'Tile server is set to "custom" but tile server URL is not set';
+
 $string['config_display_nb_moodle_users'] = 'Display number of Moodle users below the map';
 $string['config_display_nb_enrolled_users'] = 'Display number of users enrolled in the current course below the map';
 
 $string['geolocation_url_scheme_text'] = 'Geolocation service URL scheme';
-$string['geolocation_url_scheme_text_desc'] = 'Pseudo-field {{city}} will be replaced by user\'s city';
+$string['geolocation_url_scheme_text_desc'] = 'Pseudo-field {city} will be replaced by user\'s city';
+$string['tileserver_url_scheme_text'] = 'Tileserver URL scheme (base map layer)';
+$string['tileserver_url_scheme_text_desc'] = 'Pseudo-fields {x}, {y} and {z} will be replaced by tiles indices and zoom level';
+$string['tileserver_custom'] = 'Custom';
+$string['tileserver_max_zoom_text'] = 'Max zoom';
+$string['tileserver_max_zoom_text_desc'] = "Only concerns custom tile server";
+$string['tileserver_attribution_text'] = 'Legal attribution to be displayed at the bottom of the map';
+$string['tileserver_attribution_text_desc'] = "Only concerns custom tile server";
 
 $string['scheduled_task_title'] = 'Update users geographical coordinates';
 $string['scheduled_task_title_all'] = 'Update users geographical coordinates (ALL)';

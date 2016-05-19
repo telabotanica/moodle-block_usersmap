@@ -43,7 +43,7 @@ function usersmap_generate_content($config) {
 	$PAGE->requires->js('/blocks/usersmap/js/leaflet.js', true);
 	$PAGE->requires->js('/blocks/usersmap/js/leaflet.markercluster.js', true);
 	$PAGE->requires->js('/blocks/usersmap/js/Control.FullScreen.js', true);
-	$PAGE->requires->js('/blocks/usersmap/js/usersmap.js', true);
+	//$PAGE->requires->js('/blocks/usersmap/js/usersmap.js', true);
 
 	$content = '';
 
@@ -54,8 +54,42 @@ function usersmap_generate_content($config) {
 	// Inline Javascript code because declaration order is important.
 	$jsinitmapcode = '';
 	$jsinitmapcode .= '<script type="text/javascript">' . PHP_EOL;
+
+	// Build base layer based on settings.
+	$tileservermode = get_config('usersmap', 'Tileserver');
+	switch ($tileservermode) {
+		case 'osm':
+			$jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',"
+				. "{minZoom: 8, maxZoom: 12, attribution: 'Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors'});";
+			break;
+		case 'gstreets':
+			$jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',"
+				. "{maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']});";
+			break;
+		case 'gsatellite':
+			$jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',"
+				. "{maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']});";
+			break;
+		case 'custom':
+		default:
+			$layerurl = get_config('usersmap', 'Tileserver_Url_Scheme');
+			if (empty($layerurl)) {
+				throw new Exception(get_string('error_tilserver_url_not_set', 'block_usersmap'));
+			}
+			$layermaxzoom = get_config('usersmap', 'Tileserver_Max_Zoom');
+			if (empty($layermaxzoom)) {
+				$layermaxzoom = 20;
+			}
+			$layerattribution = get_config('usersmap', 'Tileserver_Attribution');
+			$jsinitmapcode .= "baseLayer = L.tileLayer('$layerurl',"
+				. "{maxZoom: $layermaxzoom, attribution: '$layerattribution'});";
+			break;
+	}
+
 	$jsinitmapcode .= "var usersmap = L.map('usersmap-map', {fullscreenControl: true, fullscreenControlOptions: {position: 'topleft'}});" . PHP_EOL;
-	$jsinitmapcode .= "coucheOSM.addTo(usersmap);" . PHP_EOL;
+	$jsinitmapcode .= "baseLayer.addTo(usersmap);" . PHP_EOL;
+	// Clustering layer.
+	$jsinitmapcode .= "usersLayer = new L.MarkerClusterGroup({disableClusteringAtZoom : 10});";
 	$jsinitmapcode .= "usersLayer.addTo(usersmap);" . PHP_EOL;
 	// Change default icon because generated path is not understood by Moodle.
 	$markerurl = new moodle_url('/blocks/usersmap/js/images/marker-icon.png');
@@ -63,6 +97,8 @@ function usersmap_generate_content($config) {
 	$jsinitmapcode .= "var newDefaultMarkerIcon = L.icon({iconUrl: '$markerurl', shaowUrl: '$markershadowurl'});";
 	$jsinitmapcode .= "L.Marker.mergeOptions({icon: newDefaultMarkerIcon});";
 	$jsinitmapcode .= '</script>' . PHP_EOL;
+
+	// Append inline JS to content (this is a useless comment).
 	$content .= $jsinitmapcode;
 
 	// Get all available users locations.
@@ -155,7 +191,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 	if ($res) {
 		foreach ($res as $r) {
 			//var_dump($r);
-			$url = str_replace('{{city}}', $r->city, $baseurl);
+			$url = str_replace('{city}', $r->city, $baseurl);
 			//var_dump($url);
 			$info = file_get_contents($url);
 			$lat = 'NULL';

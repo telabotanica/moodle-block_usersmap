@@ -44,3 +44,41 @@ $settings->add(new admin_setting_configtext(
 
 // @TODO parameterize geolocation type / fields mapping (where to find "lat"
 // and "lon" in service results)
+
+// Tile server (predefined choices).
+$settings->add(new admin_setting_configselect(
+    'usersmap/Tileserver',
+    get_string('tileserver_select', 'block_usersmap'),
+    get_string('tileserver_select_desc', 'block_usersmap'),
+    'osm',
+	array(
+		'osm' => 'OpenStreetMap',
+		'gstreets' => 'Google Streets',
+		'gsatellite' => 'Google Satellite',
+		'custom' => get_string('tileserver_custom', 'block_usersmap')
+	)
+));
+
+// Url scheme of tile server, for Custom mode.
+$settings->add(new admin_setting_configtext(
+    'usersmap/Tileserver_Url_Scheme',
+    get_string('tileserver_url_scheme_text', 'block_usersmap'),
+    get_string('tileserver_url_scheme_text_desc', 'block_usersmap'),
+    ''
+));
+
+// Max zoom of tile server, for Custom mode.
+$settings->add(new admin_setting_configtext(
+    'usersmap/Tileserver_Max_Zoom',
+    get_string('tileserver_max_zoom_text', 'block_usersmap'),
+    get_string('tileserver_max_zoom_text_desc', 'block_usersmap'),
+    ''
+));
+
+// Attribution mention on base layer, for Custom mode.
+$settings->add(new admin_setting_configtext(
+    'usersmap/Tileserver_Attribution',
+    get_string('tileserver_attribution_text', 'block_usersmap'),
+    get_string('tileserver_attribution_text_desc', 'block_usersmap'),
+    ''
+));
