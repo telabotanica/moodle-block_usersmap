@@ -43,7 +43,6 @@ function usersmap_generate_content($config) {
 	$PAGE->requires->js('/blocks/usersmap/js/leaflet.js', true);
 	$PAGE->requires->js('/blocks/usersmap/js/leaflet.markercluster.js', true);
 	$PAGE->requires->js('/blocks/usersmap/js/Control.FullScreen.js', true);
-	//$PAGE->requires->js('/blocks/usersmap/js/usersmap.js', true);
 
 	$content = '';
 
@@ -103,10 +102,31 @@ function usersmap_generate_content($config) {
 
 	// Get all available users locations.
 	// @TODO Load GeoJSON directly from the database ? Which performance ?
-	$r0 = "SELECT id, lat, lon , city, count(*) as nb "
-		. "FROM " . $CFG->prefix . "block_usersmap "
-		. "WHERE lat IS NOT NULL AND lon IS NOT NULL "
-		. "GROUP BY lat, lon"; // City should always be the same for a given lat,lon pair.
+
+	// Select users according to the instance config.
+    $whattodisplay = 'aeu';
+    if (isset($config->whattodisplay)) {
+        $whattodisplay = $config->whattodisplay;
+    }
+	$onlineusersonly = in_array($whattodisplay, array('omu', 'oeu'));
+	$enrolledusersonly = in_array($whattodisplay, array('aeu', 'oeu'));
+
+	$r0 = "SELECT bu.id as id, bu.lat as lat, bu.lon as lon, bu.city as city, count(*) as nb "
+		. "FROM " . $CFG->prefix . "block_usersmap bu ";
+	$join = '';
+	$where = array("lat IS NOT NULL", "lon IS NOT NULL");
+	if ($onlineusersonly) {
+		$join .= " LEFT JOIN user u ON u.id = bu.userid";
+		$where[] = "UNIX_TIMESTAMP() - u.lastaccess < 900"; // 15 mn.
+	}
+	if ($enrolledusersonly && ($COURSE->id > 1)) { // Course n°1 is platform home.
+		$join .= " LEFT JOIN user_enrolments ue ON ue.id = bu.userid LEFT JOIN enrol e ON e.id = ue.enrolid";
+		$where[] = "e.courseid = " . $COURSE->id;
+	}
+	$r0 .= $join
+		. " WHERE " . implode(' AND ', $where)
+		. " GROUP BY lat, lon"; // City should always be the same for a given lat,lon pair.
+
 	$res = $DB->get_records_sql($r0, array());
 	if ($res) {
 		// Generate JS code for markers.
@@ -143,7 +163,7 @@ function usersmap_generate_content($config) {
 	}
 
 	// Count all users enrolled in the current course.
-    $displaynbenrolledusers = true;
+    $displaynbenrolledusers = false;
     if (isset($config->displaynbenrolledusers)) {
         $displaynbenrolledusers = $config->displaynbenrolledusers;
     }

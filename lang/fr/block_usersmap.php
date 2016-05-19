@@ -38,6 +38,11 @@ $string['error_tilserver_url_not_set'] = 'Le serveur de tuiles est réglé sur "
 
 $string['config_display_nb_moodle_users'] = 'Afficher le nombre d\'utilisateurs de Moodle sous la carte';
 $string['config_display_nb_enrolled_users'] = 'Afficher le nombre d\'utilisateurs inscrits au cours actuel sous la carte';
+$string['config_what_to_display'] = 'Quels utilisateurs afficher sur la carte ?';
+$string['config_what_to_display_amu'] = 'Tous les utilisateurs de Moodle';
+$string['config_what_to_display_omu'] = 'Tous les utilisateurs de Moodle actuellement en ligne';
+$string['config_what_to_display_aeu'] = 'Tous les utilisateurs inscrits au cours';
+$string['config_what_to_display_oeu'] = 'Tous les utilisateurs inscrits au cours et actuellement en ligne';
 
 $string['geolocation_url_scheme_text'] = 'Schéma d\'url du service de géolocalisation';
 $string['geolocation_url_scheme_text_desc'] = 'Le pseudo-champ {city} sera remplacé par la ville de l\'utilisateur';

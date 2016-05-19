@@ -39,6 +39,16 @@ class block_usersmap_edit_form extends block_edit_form {
         // Section header title according to language file.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
+		// Display all Moodle users, all enrolled users, online Moodle users or online enrolled users ?
+		$mform->addElement('select', 'config_whattodisplay', get_string('config_what_to_display', 'block_usersmap'), array(
+			'amu' => get_string('config_what_to_display_amu', 'block_usersmap'),
+			'omu' => get_string('config_what_to_display_omu', 'block_usersmap'),
+			'aeu' => get_string('config_what_to_display_aeu', 'block_usersmap'),
+			'oeu' => get_string('config_what_to_display_oeu', 'block_usersmap')
+		));
+		$mform->setDefault('config_whattodisplay', 'aeu');
+		$mform->setType('config_whattodisplay', PARAM_RAW);
+
 		// Display Moodle users count.
 		$mform->addElement('advcheckbox', 'config_displaynbmoodleusers', get_string('config_display_nb_moodle_users', 'block_usersmap'), '', null, array(0, 1));
 		$mform->setDefault('config_displaynbmoodleusers', 0);
@@ -46,7 +56,7 @@ class block_usersmap_edit_form extends block_edit_form {
 
 		// Display enrolled users count.
 		$mform->addElement('advcheckbox', 'config_displaynbenrolledusers', get_string('config_display_nb_enrolled_users', 'block_usersmap'), '', null, array(0, 1));
-		$mform->setDefault('config_displaynbenrolledusers', 1);
+		$mform->setDefault('config_displaynbenrolledusers', 0);
 		$mform->setType('config_displaynbenrolledusers', PARAM_RAW);
     }
 }

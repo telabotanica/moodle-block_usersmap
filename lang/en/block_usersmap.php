@@ -38,6 +38,11 @@ $string['error_tilserver_url_not_set'] = 'Tile server is set to "custom" but til
 
 $string['config_display_nb_moodle_users'] = 'Display number of Moodle users below the map';
 $string['config_display_nb_enrolled_users'] = 'Display number of users enrolled in the current course below the map';
+$string['config_what_to_display'] = 'Whiwh utilisateurs should the map show ?';
+$string['config_what_to_display_amu'] = 'All Moodle users';
+$string['config_what_to_display_omu'] = 'All Moodle users who are online at the moment';
+$string['config_what_to_display_aeu'] = 'All the users enrolled in the course';
+$string['config_what_to_display_oeu'] = 'All the users enrolled in the course who are online at the moment';
 
 $string['geolocation_url_scheme_text'] = 'Geolocation service URL scheme';
 $string['geolocation_url_scheme_text_desc'] = 'Pseudo-field {city} will be replaced by user\'s city';
