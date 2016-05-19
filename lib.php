@@ -264,7 +264,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 							//var_dump($info);
 							$lat = $info['geonames'][0]['lat'];
 							$lon = $info['geonames'][0]['lng'];
-							$values[] = "(" . $r->id . ", $lat, $lon, $r->city)";
+							$values[] = "(" . $r->id . ", $lat, $lon, '$r->city')";
 						}
 					}
 					break;
@@ -280,7 +280,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 						$lat = $info[$latfield];
 						$lon = $info[$lonfield];
 					}
-					$values[] = "(" . $r->id . ", $lat, $lon, $r->city)";
+					$values[] = "(" . $r->id . ", $lat, $lon, '$r->city')";
 					break;
 			}
 		}
