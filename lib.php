@@ -93,7 +93,7 @@ function usersmap_generate_content($config) {
 	// Change default icon because generated path is not understood by Moodle.
 	$markerurl = new moodle_url('/blocks/usersmap/js/images/marker-icon.png');
 	$markershadowurl = new moodle_url('/blocks/usersmap/js/images/marker-shadow.png');
-	$jsinitmapcode .= "var newDefaultMarkerIcon = L.icon({iconUrl: '$markerurl', shaowUrl: '$markershadowurl'});";
+	$jsinitmapcode .= "var newDefaultMarkerIcon = L.icon({iconUrl: '$markerurl', shadowUrl: '$markershadowurl', iconSize: [24,36], iconAnchor: [12,36]});";
 	$jsinitmapcode .= "L.Marker.mergeOptions({icon: newDefaultMarkerIcon});";
 	$jsinitmapcode .= '</script>' . PHP_EOL;
 
