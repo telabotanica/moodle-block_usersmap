@@ -128,9 +128,10 @@ function usersmap_generate_content($config) {
 		. " GROUP BY lat, lon"; // City should always be the same for a given lat,lon pair.
 
 	$res = $DB->get_records_sql($r0, array());
+
+	$jsmarkerscode = '<script type="text/javascript">' . PHP_EOL;
 	if ($res) {
 		// Generate JS code for markers.
-		$jsmarkerscode = '<script type="text/javascript">' . PHP_EOL;
 		$markerid = 1;
 		foreach ($res as $r) {
 			// Add multiple instance of the marker so that the clustering
@@ -145,9 +146,11 @@ function usersmap_generate_content($config) {
 		}
 		$jsmarkerscode .= 'usersmap.fitBounds(usersLayer.getBounds());' . PHP_EOL;
 		$jsmarkerscode .= 'usersmap.setZoom(1);' . PHP_EOL;
-		$jsmarkerscode .= '</script>' . PHP_EOL;
-		$content .= $jsmarkerscode;
+	} else {
+		$jsmarkerscode .= "usersmap.setView({lat:43.614203, lng:3.860752}, 1);" . PHP_EOL; // Center on Montpellier, best city in the world.
 	}
+	$jsmarkerscode .= '</script>' . PHP_EOL;
+	$content .= $jsmarkerscode;
 
 	// Count all active users in Moodle.
     $displaynbmoodleusers = false;
