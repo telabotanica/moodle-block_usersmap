@@ -40,7 +40,7 @@ $tasks = array(
         'blocking' => 0,
         'minute' => '30',
         'hour' => '2',
-        'day' => '17', // Ça ou autre chose.
+        'day' => '17', // This or anything else.
         'dayofweek' => '*',
         'month' => '*'
     )

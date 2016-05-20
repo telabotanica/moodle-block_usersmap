@@ -24,7 +24,7 @@
  * @copyright  2016 Mathias Chouet, Tela Botanica
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 function xmldb_block_usersmap_upgrade($oldversion) {
     global $DB;
 

@@ -27,7 +27,7 @@
 
 namespace block_usersmap\task;
 
-include_once($CFG->dirroot.'/blocks/usersmap/lib.php');
+require_once($CFG->dirroot.'/blocks/usersmap/lib.php');
 
 /**
  * Updates geolocation for users having none yet, and stores the coordinates
@@ -36,7 +36,7 @@ include_once($CFG->dirroot.'/blocks/usersmap/lib.php');
 class usersmap_update_geoloc extends \core\task\scheduled_task {
 
     public function get_name() {
-        // Shown in admin screens
+        // Shown in admin screens.
         return get_string('scheduled_task_title', 'block_usersmap');
     }
 
@@ -53,12 +53,12 @@ class usersmap_update_geoloc extends \core\task\scheduled_task {
 class usersmap_update_geoloc_all extends \core\task\scheduled_task {
 
     public function get_name() {
-        // Shown in admin screens
+        // Shown in admin screens.
         return get_string('scheduled_task_title_all', 'block_usersmap');
     }
 
     public function execute() {
         echo get_string('scheduled_task_start_message_all', 'block_usersmap') . PHP_EOL;
-        usersmap_update_geolocation(true); // Update for all users
+        usersmap_update_geolocation(true); // Update for all users.
     }
 }

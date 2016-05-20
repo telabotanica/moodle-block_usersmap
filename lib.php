@@ -203,12 +203,11 @@ function usersmap_update_geolocation($updateeveryone=false) {
     global $DB;
     global $CFG;
 
-    // Query all users having a city set in their profile
+    // Query all users having a city set in their profile.
     $q = "SELECT id, city, country FROM " . $CFG->prefix . "user WHERE city != ''";
     if (! $updateeveryone) { // Only update users having no geolocation yet.
         $q .= "AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
     }
-    //$q .= " ORDER BY RAND()"; // For debug purposes.
     $q .= " LIMIT 100"; // 100 at a time to spare the geolocation server's life.
 
     $res = $DB->get_records_sql($q, array());
@@ -250,18 +249,15 @@ function usersmap_update_geolocation($updateeveryone=false) {
             $newrecord = new StdClass();
             $newrecord->userid = $r->id;
             $newrecord->city = $r->city;
-            //var_dump($r)
             switch($geolocationservice) {
                 case 'geonames':
                     $url = $baseurl;
                     $url .= "&q=" . urlencode(trim($r->city));
                     $url .= "&country=" . urlencode(trim($r->country));
                     $info = file_get_contents($url);
-                    //var_dump($url);
                     if ($info) {
                         $info = json_decode($info, true);
                         if (isset($info['geonames']) && isset($info['geonames'][0])) {
-                            //var_dump($info);
                             $newrecord->lat = $info['geonames'][0]['lat'];
                             $newrecord->lon = $info['geonames'][0]['lng'];
                         }
@@ -271,11 +267,9 @@ function usersmap_update_geolocation($updateeveryone=false) {
                 default:
                     $url = str_replace('{city}', urlencode(trim($r->city)), $baseurl);
                     $url = str_replace('{country}', urlencode(trim($r->country)), $url);
-                    //var_dump($url);
                     $info = file_get_contents($url);
                     if ($info) {
                         $info = json_decode($info, true);
-                        //var_dump($info);
                         $newrecord->lat = $info[$latfield];
                         $newrecord->lon = $info[$lonfield];
                     }
