@@ -208,8 +208,8 @@ function usersmap_update_geolocation($updateeveryone=false) {
 	if (! $updateeveryone) { // Only update users having no geolocation yet.
 		$q .= "AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
 	}
-	$q .= " ORDER BY RAND()"; // For debug purposes.
-	$q .= " LIMIT 10"; // 100 at a time to spare the geolocation server's life.
+	//$q .= " ORDER BY RAND()"; // For debug purposes.
+	$q .= " LIMIT 100"; // 100 at a time to spare the geolocation server's life.
 
 	$res = $DB->get_records_sql($q, array());
 
@@ -254,8 +254,8 @@ function usersmap_update_geolocation($updateeveryone=false) {
 			switch($geolocationservice) {
 				case 'geonames':
 					$url = $baseurl;
-					$url .= "&q=" . urlencode($r->city);
-					$url .= "&country=" . urlencode($r->country);
+					$url .= "&q=" . urlencode(trim($r->city));
+					$url .= "&country=" . urlencode(trim($r->country));
 					$info = file_get_contents($url);
 					//var_dump($url);
 					if ($info) {
@@ -270,8 +270,8 @@ function usersmap_update_geolocation($updateeveryone=false) {
 					break;
 				case 'custom':
 				default:
-					$url = str_replace('{city}', urlencode($r->city), $baseurl);
-					$url = str_replace('{country}', urlencode($r->country), $url);
+					$url = str_replace('{city}', urlencode(trim($r->city)), $baseurl);
+					$url = str_replace('{country}', urlencode(trim($r->country)), $url);
 					//var_dump($url);
 					$info = file_get_contents($url);
 					if ($info) {
