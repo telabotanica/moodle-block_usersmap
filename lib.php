@@ -245,12 +245,12 @@ function usersmap_update_geolocation($updateeveryone=false) {
 	}
 
 	// Get geolocation data for each user.
-	$values = array();
 	if ($res) {
 		foreach ($res as $r) {
-			//var_dump($r);
-			$lat = 'NULL';
-			$lon = 'NULL';
+			$newrecord = new StdClass();
+			$newrecord->userid = $r->id;
+			$newrecord->city = $r->city;
+			//var_dump($r)
 			switch($geolocationservice) {
 				case 'geonames':
 					$url = $baseurl;
@@ -262,9 +262,8 @@ function usersmap_update_geolocation($updateeveryone=false) {
 						$info = json_decode($info, true);
 						if (isset($info['geonames']) && isset($info['geonames'][0])) {
 							//var_dump($info);
-							$lat = $info['geonames'][0]['lat'];
-							$lon = $info['geonames'][0]['lng'];
-							$values[] = "(" . $r->id . ", $lat, $lon, '$r->city')";
+							$newrecord->lat = $info['geonames'][0]['lat'];
+							$newrecord->lon = $info['geonames'][0]['lng'];
 						}
 					}
 					break;
@@ -277,17 +276,15 @@ function usersmap_update_geolocation($updateeveryone=false) {
 					if ($info) {
 						$info = json_decode($info, true);
 						//var_dump($info);
-						$lat = $info[$latfield];
-						$lon = $info[$lonfield];
+						$newrecord->lat = $info[$latfield];
+						$newrecord->lon = $info[$lonfield];
 					}
-					$values[] = "(" . $r->id . ", $lat, $lon, '$r->city')";
 					break;
 			}
+			// Inserting one at a time because of quotes issue.
+			if (! empty($newrecord->lat) && ! empty($newrecord->lon)) {
+				$DB->insert_record("block_usersmap", $newrecord);
+			}
 		}
-		$valuesstring = implode(',', $values);
-		// @TODO if update all, truncate table first or something
-		$qins = "INSERT INTO " . $CFG->prefix . "block_usersmap(userid, lat, lon, city) VALUES $valuesstring";
-		//var_dump($qins);
-		$DB->execute($qins);
 	}
 }
