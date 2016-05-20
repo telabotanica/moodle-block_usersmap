@@ -41,8 +41,8 @@ class usersmap_update_geoloc extends \core\task\scheduled_task {
     }
 
     public function execute() {
-		echo get_string('scheduled_task_start_message', 'block_usersmap') . PHP_EOL;
-		usersmap_update_geolocation(false); // Update only for users having no geolocation yet.
+        echo get_string('scheduled_task_start_message', 'block_usersmap') . PHP_EOL;
+        usersmap_update_geolocation(false); // Update only for users having no geolocation yet.
     }
 }
 
@@ -58,7 +58,7 @@ class usersmap_update_geoloc_all extends \core\task\scheduled_task {
     }
 
     public function execute() {
-		echo get_string('scheduled_task_start_message_all', 'block_usersmap') . PHP_EOL;
-		usersmap_update_geolocation(true); // Update for all users
+        echo get_string('scheduled_task_start_message_all', 'block_usersmap') . PHP_EOL;
+        usersmap_update_geolocation(true); // Update for all users
     }
 }

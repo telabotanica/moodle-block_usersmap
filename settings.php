@@ -40,10 +40,10 @@ $settings->add(new admin_setting_configselect(
     get_string('geolocation_server_select', 'block_usersmap'),
     get_string('geolocation_server_select_desc', 'block_usersmap'),
     'geonames',
-	array(
-		'geonames' => 'GeoNames',
-		'custom' => get_string('tileserver_custom', 'block_usersmap')
-	)
+    array(
+        'geonames' => 'GeoNames',
+        'custom' => get_string('tileserver_custom', 'block_usersmap')
+    )
 ));
 
 // GeoNames user name.
@@ -84,12 +84,12 @@ $settings->add(new admin_setting_configselect(
     get_string('tileserver_select', 'block_usersmap'),
     get_string('tileserver_select_desc', 'block_usersmap'),
     'osm',
-	array(
-		'osm' => 'OpenStreetMap',
-		'gstreets' => 'Google Streets',
-		'gsatellite' => 'Google Satellite',
-		'custom' => get_string('tileserver_custom', 'block_usersmap')
-	)
+    array(
+        'osm' => 'OpenStreetMap',
+        'gstreets' => 'Google Streets',
+        'gsatellite' => 'Google Satellite',
+        'custom' => get_string('tileserver_custom', 'block_usersmap')
+    )
 ));
 
 // Url scheme of tile server, for Custom mode.

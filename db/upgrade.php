@@ -29,31 +29,31 @@ function xmldb_block_usersmap_upgrade($oldversion) {
     global $DB;
 
     $result = true;
-	$dbman = $DB->get_manager();
+    $dbman = $DB->get_manager();
 
     if ($oldversion < 2016051818) {
         $table = new xmldb_table('block_usersmap');
 
-		// Define field city to be added to block_usersmap.
-		$field = new xmldb_field('city', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, null, 'lon');
+        // Define field city to be added to block_usersmap.
+        $field = new xmldb_field('city', XMLDB_TYPE_CHAR, '100', null, XMLDB_NOTNULL, null, null, 'lon');
         // Conditionally launch add field city.
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
 
-		// Define key userid (foreign unique) to be dropped form block_usersmap.
-		$key = new xmldb_key('userid', XMLDB_KEY_FOREIGN_UNIQUE, array('userid'), 'users', array('id'));
+        // Define key userid (foreign unique) to be dropped form block_usersmap.
+        $key = new xmldb_key('userid', XMLDB_KEY_FOREIGN_UNIQUE, array('userid'), 'users', array('id'));
         // Launch drop key userid.
         $dbman->drop_key($table, $key);
 
-		// Define key userid (foreign) to be added to block_usersmap.
+        // Define key userid (foreign) to be added to block_usersmap.
         $key = new xmldb_key('userid', XMLDB_KEY_FOREIGN, array('userid'), 'users', array('id'));
         // Launch add key userid.
         $dbman->add_key($table, $key);
 
         // Usersmap savepoint reached.
         upgrade_block_savepoint(true, 2016051818, 'usersmap');
-	}
+    }
 
     if ($oldversion < 2016051303) {
 

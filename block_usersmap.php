@@ -57,7 +57,7 @@ class block_usersmap extends block_base {
         return $this->content;
     }
 
-	public function has_config() {
-		return true;
-	}
+    public function has_config() {
+        return true;
+    }
 }
