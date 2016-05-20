@@ -282,9 +282,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 					break;
 			}
 			// Inserting one at a time because of quotes issue.
-			if (! empty($newrecord->lat) && ! empty($newrecord->lon)) {
-				$DB->insert_record("block_usersmap", $newrecord);
-			}
+			$DB->insert_record("block_usersmap", $newrecord);
 		}
 	}
 }
