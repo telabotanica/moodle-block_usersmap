@@ -46,7 +46,7 @@ $string['config_what_to_display_aeu'] = 'All the users enrolled in the course';
 $string['config_what_to_display_oeu'] = 'All the users enrolled in the course who are online at the moment';
 
 $string['tileserver_url_scheme_text'] = 'Tile server URL scheme (base map layer)';
-$string['tileserver_url_scheme_text_desc'] = 'Pseudo-fields {x}, {y} and {z} will be replaced by tiles indices and zoom level';
+$string['tileserver_url_scheme_text_desc'] = 'Only concerns custom tile server. Pseudo-fields {x}, {y} and {z} will be replaced by tiles indices and zoom level';
 $string['tileserver_custom'] = 'Custom';
 $string['tileserver_select'] = 'Tile server';
 $string['tileserver_select_desc'] = "Defines which base layer will be displayed on the map";

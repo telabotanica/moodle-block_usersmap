@@ -46,7 +46,7 @@ $string['config_what_to_display_aeu'] = 'Tous les utilisateurs inscrits au cours
 $string['config_what_to_display_oeu'] = 'Tous les utilisateurs inscrits au cours et actuellement en ligne';
 
 $string['tileserver_url_scheme_text'] = 'Schéma d\'url du serveur de tuiles (fond de carte)';
-$string['tileserver_url_scheme_text_desc'] = 'Les pseudo-champs {x}, {y} et {z} seront remplacés par les indices de tuiles et le niveau de zoom';
+$string['tileserver_url_scheme_text_desc'] = 'Ne s\'applique qu\'au serveur de tuiles personnalisé. Les pseudo-champs {x}, {y} et {z} seront remplacés par les indices de tuiles et le niveau de zoom';
 $string['tileserver_custom'] = 'Personnalisé';
 $string['tileserver_select'] = 'Serveur de tuiles';
 $string['tileserver_select_desc'] = "Détermine le fond de carte qui sera affiché";
