@@ -112,19 +112,19 @@ function usersmap_generate_content($config) {
 
     $r0 = "SELECT bu.id as id, bu.lat as lat, bu.lon as lon, bu.city as city, count(*) as nb "
         . "FROM " . $CFG->prefix . "block_usersmap bu ";
-    $join = '';
-    $where = array("lat IS NOT NULL", "lon IS NOT NULL");
+	$join = " LEFT JOIN user u ON u.id = bu.userid";
+	$where = array("bu.lat IS NOT NULL", "bu.lon IS NOT NULL", "u.deleted = 0", "u.suspended = 0", "u.confirmed = 1");
+
     if ($onlineusersonly) {
-        $join .= " LEFT JOIN user u ON u.id = bu.userid";
         $where[] = "UNIX_TIMESTAMP() - u.lastaccess < 900"; // 15 mn.
     }
     if ($enrolledusersonly && ($COURSE->id > 1)) { // Course n°1 is platform home.
-        $join .= " LEFT JOIN user_enrolments ue ON ue.id = bu.userid LEFT JOIN enrol e ON e.id = ue.enrolid";
+		$join .= " LEFT JOIN user_enrolments ue ON ue.userid = bu.userid LEFT JOIN enrol e ON e.id = ue.enrolid";
         $where[] = "e.courseid = " . $COURSE->id;
     }
     $r0 .= $join
         . " WHERE " . implode(' AND ', $where)
-        . " GROUP BY lat, lon"; // City should always be the same for a given lat,lon pair.
+        . " GROUP BY bu.lat, bu.lon"; // City should always be the same for a given lat,lon pair.
 
     $res = $DB->get_records_sql($r0, array());
 
@@ -202,6 +202,10 @@ function usersmap_generate_content($config) {
 function usersmap_update_geolocation($updateeveryone=false) {
     global $DB;
     global $CFG;
+
+	if ($updateeveryone) { // Clear data once in a while.
+		$DB->delete_records("block_usersmap");
+	}
 
     // Query all users having a city set in their profile.
     $q = "SELECT id, city, country FROM " . $CFG->prefix . "user WHERE city != ''";
