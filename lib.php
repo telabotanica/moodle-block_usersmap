@@ -208,9 +208,9 @@ function usersmap_update_geolocation($updateeveryone=false) {
 	}
 
     // Query all users having a city set in their profile.
-    $q = "SELECT id, city, country FROM " . $CFG->prefix . "user WHERE city != ''";
+    $q = "SELECT id, city, country FROM " . $CFG->prefix . "user WHERE city != '' AND deleted = 0";
     if (! $updateeveryone) { // Only update users having no geolocation yet.
-        $q .= "AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
+        $q .= " AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
     }
     $q .= " LIMIT 100"; // 100 at a time to spare the geolocation server's life.
 

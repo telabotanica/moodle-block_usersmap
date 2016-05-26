@@ -38,7 +38,7 @@ $tasks = array(
     array(
         'classname' => 'block_usersmap\task\usersmap_update_geoloc_all',
         'blocking' => 0,
-        'minute' => '0',
+        'minute' => '10',
         'hour' => '15',
         'day' => '26', // This or anything else.
         'dayofweek' => '*',
