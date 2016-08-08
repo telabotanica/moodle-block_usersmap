@@ -87,7 +87,6 @@ function usersmap_generate_content($config) {
 
     $jsinitmapcode .= "var usersmap = L.map('usersmap-map', {scrollWheelZoom: false, fullscreenControl: true,
                                       fullscreenControlOptions: {position: 'topleft'}});" . PHP_EOL;
-    //$jsinitmapcode .= "usersmap.once('focus', function() { usersmap.scrollWheelZoom.enable(); });" . PHP_EOL;
     $jsinitmapcode .= "baseLayer.addTo(usersmap);" . PHP_EOL;
     // Clustering layer.
     $jsinitmapcode .= "usersLayer = new L.MarkerClusterGroup({disableClusteringAtZoom : 10});";
