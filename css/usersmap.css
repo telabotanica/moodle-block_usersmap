@@ -3,3 +3,8 @@
     height: 280px;
     margin-bottom: 16px;
 }
+
+/* pour les nombres à plus de 5 chiffres (pas idéal) */
+.marker-cluster {
+	white-space: nowrap;
+}
