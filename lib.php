@@ -113,7 +113,7 @@ function usersmap_generate_content($config) {
 
     $r0 = "SELECT bu.id as id, bu.lat as lat, bu.lon as lon, bu.city as city, count(*) as nb "
         . "FROM " . $CFG->prefix . "block_usersmap bu ";
-    $join = " LEFT JOIN user u ON u.id = bu.userid";
+    $join = " LEFT JOIN " .$CFG->prefix . "user u ON u.id = bu.userid";
     $where = array("bu.lat IS NOT NULL", "bu.lon IS NOT NULL", "u.deleted = 0", "u.suspended = 0", "u.confirmed = 1");
 
     if ($onlineusersonly) {
