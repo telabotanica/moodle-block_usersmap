@@ -25,6 +25,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die;
+
 $plugin->component = 'block_usersmap';
 $plugin->version = 2016052615;
 $plugin->requires = 2014111000; // Moodle v2.8.

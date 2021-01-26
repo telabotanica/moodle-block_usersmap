@@ -27,6 +27,8 @@
 
 namespace block_usersmap\task;
 
+defined('MOODLE_INTERNAL') || die;
+
 require_once($CFG->dirroot.'/blocks/usersmap/lib.php');
 
 /**
