@@ -25,7 +25,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once($CFG->dirroot.'/blocks/usersmap/lib.php');
+defined('MOODLE_INTERNAL') || die;
+
+require_once($CFG->dirroot . '/blocks/usersmap/lib.php');
 
 /**
  * Block definition
@@ -45,6 +47,7 @@ class block_usersmap extends block_base {
 
     /**
      * Returns the block content
+     *
      * @return string
      */
     public function get_content() {

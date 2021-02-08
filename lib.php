@@ -59,15 +59,16 @@ function usersmap_generate_content($config) {
     switch ($tileservermode) {
         case 'osm':
             $jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',"
-                . "{maxZoom: 20, attribution: 'Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors'});";
+                    .
+                    "{maxZoom: 20, attribution: 'Map data © <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors'});";
             break;
         case 'gstreets':
             $jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',"
-                . "{maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']});";
+                    . "{maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']});";
             break;
         case 'gsatellite':
             $jsinitmapcode .= "baseLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',"
-                . "{maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']});";
+                    . "{maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3']});";
             break;
         case 'custom':
         default:
@@ -81,7 +82,7 @@ function usersmap_generate_content($config) {
             }
             $layerattribution = get_config('usersmap', 'Tileserver_Attribution');
             $jsinitmapcode .= "baseLayer = L.tileLayer('$layerurl',"
-                . "{maxZoom: $layermaxzoom, attribution: '$layerattribution'});";
+                    . "{maxZoom: $layermaxzoom, attribution: '$layerattribution'});";
             break;
     }
 
@@ -112,8 +113,8 @@ function usersmap_generate_content($config) {
     $enrolledusersonly = in_array($whattodisplay, array('aeu', 'oeu'));
 
     $r0 = "SELECT bu.id as id, bu.lat as lat, bu.lon as lon, bu.city as city, count(*) as nb "
-        . "FROM " . $CFG->prefix . "block_usersmap bu ";
-    $join = " LEFT JOIN " .$CFG->prefix . "user u ON u.id = bu.userid";
+            . "FROM " . $CFG->prefix . "block_usersmap bu ";
+    $join = " LEFT JOIN " . $CFG->prefix . "user u ON u.id = bu.userid";
     $where = array("bu.lat IS NOT NULL", "bu.lon IS NOT NULL", "u.deleted = 0", "u.suspended = 0", "u.confirmed = 1");
 
     if ($onlineusersonly) {
@@ -124,8 +125,8 @@ function usersmap_generate_content($config) {
         $where[] = "e.courseid = " . $COURSE->id;
     }
     $r0 .= $join
-        . " WHERE " . implode(' AND ', $where)
-        . " GROUP BY bu.lat, bu.lon"; // City should always be the same for a given lat,lon pair.
+            . " WHERE " . implode(' AND ', $where)
+            . " GROUP BY bu.lat, bu.lon"; // City should always be the same for a given lat,lon pair.
 
     $res = $DB->get_records_sql($r0, array());
 
@@ -147,7 +148,8 @@ function usersmap_generate_content($config) {
         $jsmarkerscode .= 'usersmap.fitBounds(usersLayer.getBounds());' . PHP_EOL;
         $jsmarkerscode .= 'usersmap.setZoom(1);' . PHP_EOL;
     } else {
-        $jsmarkerscode .= "usersmap.setView({lat:43.614203, lng:3.860752}, 1);" . PHP_EOL; // Center on Montpellier, best city in the world.
+        $jsmarkerscode .= "usersmap.setView({lat:43.614203, lng:3.860752}, 1);" .
+                PHP_EOL; // Center on Montpellier, best city in the world.
     }
     $jsmarkerscode .= '</script>' . PHP_EOL;
     $content .= $jsmarkerscode;
@@ -178,9 +180,9 @@ function usersmap_generate_content($config) {
     if ($displaynbenrolledusers) {
         if ($COURSE->id != 1) { // Course n°1 is platform home.
             $r2 = "SELECT count(DISTINCT userid) as nb "
-                . "FROM " . $CFG->prefix . "user_enrolments ue "
-                . "LEFT JOIN " . $CFG->prefix . "enrol e ON e.id = ue.enrolid "
-                . "WHERE e.courseid = " . $COURSE->id;
+                    . "FROM " . $CFG->prefix . "user_enrolments ue "
+                    . "LEFT JOIN " . $CFG->prefix . "enrol e ON e.id = ue.enrolid "
+                    . "WHERE e.courseid = " . $COURSE->id;
             $res = $DB->get_records_sql($r2, array());
             $singleresult = array_shift($res);
             $nbenrolledusers = $singleresult->nb;
@@ -200,7 +202,7 @@ function usersmap_generate_content($config) {
  * Called by the cron (scheduled task) to retrieve geolocation data based on
  * users cities
  */
-function usersmap_update_geolocation($updateeveryone=false) {
+function usersmap_update_geolocation($updateeveryone = false) {
     global $DB;
     global $CFG;
 
@@ -210,7 +212,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
 
     // Query all users having a city set in their profile.
     $q = "SELECT id, city, country FROM " . $CFG->prefix . "user WHERE city != '' AND deleted = 0";
-    if (! $updateeveryone) { // Only update users having no geolocation yet.
+    if (!$updateeveryone) { // Only update users having no geolocation yet.
         $q .= " AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
     }
     $q .= " LIMIT 100"; // 100 at a time to spare the geolocation server's life.
@@ -222,7 +224,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
     $baseurl = '';
     $latfield = 'lat';
     $lonfield = 'lon';
-    switch($geolocationservice) {
+    switch ($geolocationservice) {
         case 'geonames':
             $baseurl = "http://api.geonames.org/searchJSON?maxRows=1";
             $geonamesusername = get_config('usersmap', 'Geonames_Username');
@@ -254,7 +256,7 @@ function usersmap_update_geolocation($updateeveryone=false) {
             $newrecord = new StdClass();
             $newrecord->userid = $r->id;
             $newrecord->city = $r->city;
-            switch($geolocationservice) {
+            switch ($geolocationservice) {
                 case 'geonames':
                     $url = $baseurl;
                     $url .= "&q=" . urlencode(trim($r->city));
