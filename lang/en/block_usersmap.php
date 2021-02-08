@@ -69,3 +69,6 @@ $string['scheduled_task_title'] = 'Update users geographical coordinates';
 $string['scheduled_task_title_all'] = 'Update users geographical coordinates (ALL)';
 $string['scheduled_task_start_message'] = 'Updating users geographical coordinates';
 $string['scheduled_task_start_message_all'] = 'Updating users geographical coordinates (ALL)';
+
+$string['countriesmissing_text'] = 'Allow countries missing';
+$string['countriesmissing_text_desc'] = 'If this option is checked, the plugin will also process data that does not have a country defined';

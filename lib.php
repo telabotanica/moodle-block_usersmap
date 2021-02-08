@@ -113,8 +113,8 @@ function usersmap_generate_content($config) {
     $enrolledusersonly = in_array($whattodisplay, array('aeu', 'oeu'));
 
     $r0 = "SELECT bu.id as id, bu.lat as lat, bu.lon as lon, bu.city as city, count(*) as nb "
-            . "FROM " . $CFG->prefix . "block_usersmap bu ";
-    $join = " LEFT JOIN " . $CFG->prefix . "user u ON u.id = bu.userid";
+            . "FROM {block_usersmap} bu ";
+    $join = " LEFT JOIN {user} u ON u.id = bu.userid";
     $where = array("bu.lat IS NOT NULL", "bu.lon IS NOT NULL", "u.deleted = 0", "u.suspended = 0", "u.confirmed = 1");
 
     if ($onlineusersonly) {
@@ -123,6 +123,11 @@ function usersmap_generate_content($config) {
     if ($enrolledusersonly && ($COURSE->id > 1)) { // Course n°1 is platform home.
         $join .= " LEFT JOIN user_enrolments ue ON ue.userid = bu.userid LEFT JOIN enrol e ON e.id = ue.enrolid";
         $where[] = "e.courseid = " . $COURSE->id;
+    }
+    // Check if we have to ignore user with no countries set.
+    $countriesmissing = get_config('usersmap', 'countriesmissing');
+    if (!$countriesmissing) {
+        $where[] = "u.country <> ''";
     }
     $r0 .= $join
             . " WHERE " . implode(' AND ', $where)
@@ -160,7 +165,12 @@ function usersmap_generate_content($config) {
         $displaynbmoodleusers = $config->displaynbmoodleusers;
     }
     if ($displaynbmoodleusers) {
-        $r1 = "SELECT count(*) as nb FROM " . $CFG->prefix . "user WHERE confirmed = 1 AND deleted = 0 AND suspended = 0";
+        $r1 = "SELECT count(*) as nb FROM {user} WHERE confirmed = 1 AND deleted = 0 AND suspended = 0";
+        // Check if we have to ignore user with no countries set.
+        $countriesmissing = get_config('usersmap', 'countriesmissing');
+        if (!$countriesmissing) {
+            $r1 .= " AND country <> ''";
+        }
         $res = $DB->get_records_sql($r1, array());
         $singleresult = array_shift($res);
         $nbusers = $singleresult->nb;
@@ -178,10 +188,11 @@ function usersmap_generate_content($config) {
         $displaynbenrolledusers = $config->displaynbenrolledusers;
     }
     if ($displaynbenrolledusers) {
-        if ($COURSE->id != 1) { // Course n°1 is platform home.
+        if ($COURSE->id != 1) {
+            // Course n°1 is platform home.
             $r2 = "SELECT count(DISTINCT userid) as nb "
-                    . "FROM " . $CFG->prefix . "user_enrolments ue "
-                    . "LEFT JOIN " . $CFG->prefix . "enrol e ON e.id = ue.enrolid "
+                    . "FROM {user_enrolments} ue "
+                    . "LEFT JOIN {enrol} e ON e.id = ue.enrolid "
                     . "WHERE e.courseid = " . $COURSE->id;
             $res = $DB->get_records_sql($r2, array());
             $singleresult = array_shift($res);
@@ -204,16 +215,15 @@ function usersmap_generate_content($config) {
  */
 function usersmap_update_geolocation($updateeveryone = false) {
     global $DB;
-    global $CFG;
 
     if ($updateeveryone) { // Clear data once in a while.
         $DB->delete_records("block_usersmap");
     }
 
     // Query all users having a city set in their profile.
-    $q = "SELECT id, city, country FROM " . $CFG->prefix . "user WHERE city != '' AND deleted = 0";
+    $q = "SELECT id, city, country FROM {user} WHERE city != '' AND deleted = 0";
     if (!$updateeveryone) { // Only update users having no geolocation yet.
-        $q .= " AND id NOT IN (SELECT userid FROM " . $CFG->prefix . "block_usersmap)";
+        $q .= " AND id NOT IN (SELECT userid FROM {block_usersmap})";
     }
     $q .= " LIMIT 100"; // 100 at a time to spare the geolocation server's life.
 
