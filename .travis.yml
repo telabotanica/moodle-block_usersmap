@@ -7,11 +7,11 @@ cache:
     - $HOME/.composer/cache
 
 php:
- - 5.4
+ - 7.3
 
 env:
  global:
-  - MOODLE_BRANCH=MOODLE_30_STABLE
+  - MOODLE_BRANCH=MOODLE_39_STABLE
   - IGNORE_PATHS=js,css
  matrix:
   - DB=mysqli
