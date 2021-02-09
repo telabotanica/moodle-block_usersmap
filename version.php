@@ -28,7 +28,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 $plugin->component = 'block_usersmap';
-$plugin->version = 2016052615;
+$plugin->version = 2020080204;
 $plugin->requires = 2014111000; // Moodle v2.8.
 $plugin->maturity = MATURITY_BETA;
-$plugin->release = "0.2";
+$plugin->release = "1.4";

@@ -69,3 +69,6 @@ $string['scheduled_task_title'] = 'Mise à jour des coordonnées géographiques 
 $string['scheduled_task_title_all'] = 'Mise à jour des coordonnées géographiques des utilisateurs (TOUS)';
 $string['scheduled_task_start_message'] = 'Mise à jour des coordonnées géographiques des utilisateurs !';
 $string['scheduled_task_start_message_all'] = 'Mise à jour des coordonnées géographiques des utilisateurs (TOUS)';
+
+$string['countriesmissing_text'] = 'Autoriser pays manquants';
+$string['countriesmissing_text_desc'] = 'Si cette option est coché, le plugin traitera également les données n\'ayant pas de pays défini';

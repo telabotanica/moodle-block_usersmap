@@ -115,3 +115,12 @@ $settings->add(new admin_setting_configtext(
     get_string('tileserver_attribution_text_desc', 'block_usersmap'),
     ''
 ));
+// Setting that allows to define if we want to ignore or not the data having no defined country.
+$settings->add(new admin_setting_configcheckbox(
+        'usersmap/countriesmissing',
+        get_string('countriesmissing_text', 'block_usersmap'),
+        get_string('countriesmissing_text_desc', 'block_usersmap'),
+        false,
+        true,
+        false
+));
