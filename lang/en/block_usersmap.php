@@ -37,6 +37,7 @@ $string['config_display_nb_moodle_users'] = 'Display number of Moodle users belo
 $string['config_display_nb_enrolled_users'] = 'Display number of users enrolled in the current course below the map';
 $string['config_display_nb_moodle_users_format'] = "Display format for the number of Moodle users ({nb} will be replaced by the number)";
 $string['config_display_nb_moodle_users_format_default'] = '{nb} users in Moodle';
+$string['config_display_nb_moodle_users_format_countriemissing'] = '{nb} Registered on the platform that indicated their country';
 $string['config_display_nb_enrolled_users_format'] = "Display format for the number of users enrolled in the current course ({nb} will be replaced by the number)";
 $string['config_display_nb_enrolled_users_format_default'] = '{nb} users in this course';
 $string['config_what_to_display'] = 'Whiwh utilisateurs should the map show ?';

@@ -175,6 +175,9 @@ function usersmap_generate_content($config) {
         $singleresult = array_shift($res);
         $nbusers = $singleresult->nb;
         $stringformat = get_string('config_display_nb_moodle_users_format_default', 'block_usersmap');
+        if (!$countriesmissing) {
+            $stringformat = get_string('config_display_nb_moodle_users_format_countriemissing', 'block_usersmap');
+        }
         if (isset($config->displaynbmoodleusers_format)) {
             $stringformat = $config->displaynbmoodleusers_format;
         }
